@@ -4,19 +4,11 @@
 
 :root {
   color-scheme: light;
-  --paper: #f1f4ef;
-  --ink: #07120f;
-  --muted: #66716d;
-  --signal: #00b8d9;
-  --line: rgba(7, 18, 15, 0.16);
-}
-
-.dark {
-  color-scheme: dark;
-  --paper: #07100e;
-  --ink: #f2f6f2;
-  --muted: #8e9c96;
-  --line: rgba(255, 255, 255, 0.14);
+  --canvas: #f7f9fc;
+  --ink: #111827;
+  --muted: #64748b;
+  --line: #dbe3ee;
+  --blue: #2563eb;
 }
 
 * { box-sizing: border-box; }
@@ -24,38 +16,32 @@ html { scroll-behavior: smooth; }
 
 body {
   min-height: 100vh;
+  max-width: 100vw;
   overflow-x: hidden;
-  background: var(--paper);
+  background: var(--canvas);
   color: var(--ink);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 72px 72px;
-  opacity: 0.22;
-  mask-image: linear-gradient(to bottom, black, transparent 88%);
-}
-
-::selection { background: #00b8d9; color: #07120f; }
+::selection { background: #bef264; color: #111827; }
 .text-balance { text-wrap: balance; }
 
 .dossier-label {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.6875rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .technical-border { border: 1px solid var(--line); }
+
+.light-panel {
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(18px);
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

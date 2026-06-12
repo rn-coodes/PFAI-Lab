@@ -5,7 +5,7 @@ import { projects } from "@/data/projects";
 
 export function ProjectGrid() {
   return (
-    <div className="overflow-hidden">
+    <div>
       {projects.map((project, index) => (
         <ProjectCard key={project.slug} project={project} index={index} />
       ))}

@@ -1,62 +1,44 @@
-import { ArrowUpRight, Check, CircleDot, Terminal } from "lucide-react";
+import { ArrowRight, CheckCircle2, Code2, Cpu, GraduationCap, RadioTower } from "lucide-react";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/animated-section";
 import { BackendStatus } from "@/components/backend-status";
 import { Hero } from "@/components/hero";
 import { ProjectGrid } from "@/components/project-grid";
+import { TechMarquee } from "@/components/tech-marquee";
 import { owner } from "@/data/projects";
 
 export default function HomePage() {
   return (
     <main>
       <Hero />
-      <section className="mx-auto max-w-[1480px] border-x border-black/15 px-4 py-20 dark:border-white/15 sm:px-8 lg:px-14">
-        <AnimatedSection className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
-          <div>
-            <p className="dossier-label text-cyan-700 dark:text-cyan-300">Operating principles / 001</p>
-            <h2 className="mt-5 max-w-md text-4xl font-black leading-tight sm:text-6xl">Backend work should be inspectable.</h2>
-          </div>
-          <div className="grid gap-px bg-black/15 dark:bg-white/15 sm:grid-cols-3">
-            {[
-              ["Concurrency", "Worker pools, channels, and controlled parallelism."],
-              ["Security", "Signed identity, protected routes, predictable boundaries."],
-              ["Realtime", "Persistent connections and observable system state."]
-            ].map(([title, copy], index) => (
-              <div key={title} className="bg-[#f1f4ef] p-6 dark:bg-[#07100e]">
-                <span className="font-mono text-xs text-cyan-700 dark:text-cyan-300">0{index + 1}</span>
-                <h3 className="mt-8 text-xl font-black">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">{copy}</p>
-              </div>
-            ))}
-          </div>
-        </AnimatedSection>
-      </section>
+      <TechMarquee />
 
-      <section className="mx-auto max-w-[1480px] border-x border-black/15 dark:border-white/15">
-        <div className="flex flex-col justify-between gap-5 border-y border-black/20 p-6 dark:border-white/20 sm:flex-row sm:items-end sm:p-10">
-          <div><p className="dossier-label text-cyan-700 dark:text-cyan-300">Selected case studies / 003</p><h2 className="mt-3 text-4xl font-black sm:text-6xl">Deployed systems</h2></div>
-          <Link href="/work" className="flex items-center gap-2 text-xs font-black uppercase">Full work index <ArrowUpRight className="h-4 w-4" /></Link>
-        </div>
-        <ProjectGrid />
-      </section>
-
-      <section className="mx-auto grid max-w-[1480px] border-x border-b border-black/15 dark:border-white/15 lg:grid-cols-[1fr_1fr]">
-        <AnimatedSection className="border-b border-black/15 p-6 dark:border-white/15 sm:p-10 lg:border-b-0 lg:border-r">
-          <p className="dossier-label text-cyan-700 dark:text-cyan-300">Identity record</p>
-          <div className="mt-8 grid gap-8 sm:grid-cols-[140px_1fr]">
-            <div className="grid h-36 w-36 place-items-center bg-[#07120f] text-7xl font-black text-cyan-300 dark:bg-cyan-300 dark:text-[#07120f]">R</div>
-            <div><h2 className="text-4xl font-black">{owner.name}</h2><p className="mt-2 font-mono text-xs text-slate-500">{owner.studentId} / NUTECH</p><p className="mt-5 text-sm leading-7 text-slate-600 dark:text-slate-300">Go-focused backend engineer building secure APIs, realtime infrastructure, and concurrent services.</p><Link href="/profile" className="mt-6 inline-flex items-center gap-2 border-b-2 border-cyan-500 pb-1 text-xs font-black uppercase">Open profile <ArrowUpRight className="h-4 w-4" /></Link></div>
+      <section className="px-3 py-20 sm:px-6">
+        <AnimatedSection className="mx-auto max-w-7xl">
+          <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+            <div><p className="text-xs font-black uppercase tracking-[0.18em] text-blue-600">Capabilities</p><h2 className="mt-3 max-w-2xl text-4xl font-black leading-tight text-slate-950 sm:text-6xl">Backend engineering with visible results.</h2></div>
+            <p className="max-w-md text-sm leading-7 text-slate-600">Each project focuses on a practical backend challenge and ships with a working interface, source code, and deployed service.</p>
           </div>
-        </AnimatedSection>
-        <AnimatedSection className="p-6 sm:p-10">
-          <p className="dossier-label text-cyan-700 dark:text-cyan-300">Deployment telemetry</p>
-          <div className="mt-8"><BackendStatus /></div>
-          <div className="mt-5 grid grid-cols-2 gap-px bg-black/15 dark:bg-white/15">
-            {[[Terminal, "Railway", "Backend"], [CircleDot, "Vercel", "Frontend"], [Check, "GitHub", "Source"], [Check, "0", "Vulnerabilities"]].map(([Icon, value, label]) => {
-              const ItemIcon = Icon as typeof Terminal;
-              return <div key={String(label)} className="bg-[#f1f4ef] p-4 dark:bg-[#07100e]"><ItemIcon className="h-4 w-4 text-cyan-600 dark:text-cyan-300" /><p className="mt-4 text-xl font-black">{String(value)}</p><p className="dossier-label mt-1 text-slate-500">{String(label)}</p></div>;
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {[[RadioTower, "Realtime products", "Live WebSocket communication with resilient connection handling.", "bg-cyan-200"], [CheckCircle2, "Secure systems", "JWT authentication and predictable protected API boundaries.", "bg-lime-200"], [Cpu, "Concurrent software", "Worker pools, channels, and controlled parallel execution.", "bg-violet-200"]].map(([Icon, title, copy, color]) => {
+              const ItemIcon = Icon as typeof Cpu;
+              return <div key={String(title)} className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"><span className={`grid h-12 w-12 place-items-center rounded-md ${color}`}><ItemIcon className="h-5 w-5" /></span><h3 className="mt-8 text-xl font-black text-slate-950">{String(title)}</h3><p className="mt-3 text-sm leading-7 text-slate-600">{String(copy)}</p></div>;
             })}
           </div>
+        </AnimatedSection>
+      </section>
+
+      <section className="px-3 pb-20 sm:px-6">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end"><div><p className="text-xs font-black uppercase tracking-[0.18em] text-blue-600">Selected projects</p><h2 className="mt-3 text-4xl font-black text-slate-950 sm:text-6xl">Built in Go. Ready to run.</h2></div><Link href="/work" className="flex items-center gap-2 text-sm font-black text-blue-600">View all work <ArrowRight className="h-4 w-4" /></Link></div>
+          <ProjectGrid />
+        </div>
+      </section>
+
+      <section className="px-3 pb-20 sm:px-6">
+        <AnimatedSection className="mx-auto grid max-w-7xl overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xl lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="bg-blue-600 p-8 text-white sm:p-12"><p className="text-xs font-black uppercase tracking-[0.18em] text-blue-100">About the engineer</p><h2 className="mt-5 text-5xl font-black">{owner.name}</h2><p className="mt-3 text-blue-100">{owner.role}</p><div className="mt-10 flex items-start gap-3 border-t border-white/20 pt-6"><GraduationCap className="h-5 w-5 shrink-0" /><p className="text-sm leading-6">{owner.university}<br />Student ID: {owner.studentId}</p></div><Link href="/profile" className="mt-8 inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 text-xs font-black uppercase text-blue-700">Meet Rehan <ArrowRight className="h-4 w-4" /></Link></div>
+          <div className="p-8 sm:p-12"><div className="flex items-center gap-3"><Code2 className="h-5 w-5 text-blue-600" /><p className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">Live infrastructure</p></div><div className="mt-6"><BackendStatus /></div></div>
         </AnimatedSection>
       </section>
     </main>

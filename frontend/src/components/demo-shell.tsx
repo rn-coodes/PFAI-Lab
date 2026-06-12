@@ -6,20 +6,11 @@ type DemoShellProps = PropsWithChildren<{ eyebrow: string; title: string; descri
 
 export function DemoShell({ eyebrow, title, description, repository, status, children }: DemoShellProps) {
   return (
-    <main className="mx-auto max-w-[1480px] border-x border-black/15 dark:border-white/15">
-      <div className="grid border-b border-black/20 dark:border-white/20 lg:grid-cols-[1fr_auto]">
-        <header className="p-6 sm:p-10">
-          <Link href="/work" className="inline-flex items-center gap-2 text-xs font-black uppercase"><ArrowLeft className="h-4 w-4" /> Work index</Link>
-          <p className="dossier-label mt-10 text-cyan-700 dark:text-cyan-300">{eyebrow}</p>
-          <h1 className="mt-4 text-4xl font-black sm:text-7xl">{title}</h1>
-          <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300">{description}</p>
-        </header>
-        <div className="grid grid-cols-2 border-t border-black/15 dark:border-white/15 lg:grid-cols-1 lg:border-l lg:border-t-0">
-          <div className="grid min-h-20 place-items-center border-r border-black/15 dark:border-white/15 lg:border-b lg:border-r-0">{status ?? <span className="dossier-label text-emerald-700 dark:text-emerald-300">Live system</span>}</div>
-          <Link href={repository} target="_blank" className="flex min-h-20 items-center justify-between gap-5 px-5 text-xs font-black uppercase transition hover:bg-[#07120f] hover:text-white dark:hover:bg-white dark:hover:text-black"><Github className="h-4 w-4" /> Source <ArrowUpRight className="h-4 w-4" /></Link>
-        </div>
+    <main className="px-3 pb-20 pt-10 sm:px-6 sm:pt-16">
+      <div className="mx-auto max-w-7xl">
+        <header className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm sm:p-10"><div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end"><div><Link href="/work" className="inline-flex items-center gap-2 text-sm font-black text-slate-500 hover:text-blue-600"><ArrowLeft className="h-4 w-4" /> All projects</Link><p className="mt-10 text-xs font-black uppercase tracking-[0.18em] text-blue-600">{eyebrow}</p><h1 className="mt-4 text-4xl font-black text-slate-950 sm:text-7xl">{title}</h1><p className="mt-4 max-w-3xl text-sm leading-7 text-slate-600">{description}</p></div><div className="flex flex-wrap items-center gap-3">{status ?? <span className="rounded-full bg-emerald-100 px-4 py-2 text-xs font-black text-emerald-700">Live system</span>}<Link href={repository} target="_blank" className="flex h-12 items-center gap-3 rounded-md bg-slate-950 px-5 text-xs font-black uppercase text-white hover:bg-blue-600"><Github className="h-4 w-4" /> Source <ArrowUpRight className="h-4 w-4" /></Link></div></div></header>
+        <div className="mt-6">{children}</div>
       </div>
-      <div className="p-4 sm:p-8">{children}</div>
     </main>
   );
 }

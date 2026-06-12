@@ -22,14 +22,9 @@ export function BackendStatus() {
   useEffect(() => { void check(); const timer = window.setInterval(check, 60_000); return () => window.clearInterval(timer); }, [check]);
 
   return (
-    <div className="border border-black/20 bg-[#07120f] text-white dark:border-white/20">
-      <div className="grid grid-cols-[1fr_auto] border-b border-white/15">
-        <div className="p-4"><p className="dossier-label text-cyan-300">Railway backend</p><p className="mt-2 text-xl font-black">{status === "online" ? "Operational" : status === "checking" ? "Checking" : "Unavailable"}</p></div>
-        <button type="button" onClick={() => void check()} className="grid w-16 place-items-center border-l border-white/15 transition hover:bg-white/10" aria-label="Refresh backend status"><RefreshCw className={`h-4 w-4 ${status === "checking" ? "animate-spin" : ""}`} /></button>
-      </div>
-      <div className="grid grid-cols-3">
-        {["Gin API", "JWT Auth", "WebSockets"].map((service, index) => <div key={service} className="border-r border-white/15 p-4 last:border-0"><Activity className={`h-4 w-4 ${status === "online" ? "text-emerald-300" : "text-slate-600"}`} /><p className="mt-4 text-[10px] font-black uppercase">{service}</p><p className="mt-1 font-mono text-[9px] text-slate-500">{index === 0 && latency ? `${latency}ms` : status.toUpperCase()}</p></div>)}
-      </div>
+    <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+      <div className="flex items-center justify-between border-b border-slate-200 p-5"><div><p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400">Railway backend</p><p className="mt-2 text-2xl font-black text-slate-950">{status === "online" ? "Everything is operational" : status === "checking" ? "Checking systems" : "Service unavailable"}</p></div><button type="button" onClick={() => void check()} className="grid h-10 w-10 place-items-center rounded-md border border-slate-200 bg-white text-slate-600 transition hover:text-blue-600" aria-label="Refresh backend status"><RefreshCw className={`h-4 w-4 ${status === "checking" ? "animate-spin" : ""}`} /></button></div>
+      <div className="grid grid-cols-3 gap-px bg-slate-200">{["Gin API", "JWT Auth", "WebSockets"].map((service, index) => <div key={service} className="bg-white p-4"><Activity className={`h-4 w-4 ${status === "online" ? "text-emerald-500" : "text-slate-300"}`} /><p className="mt-4 text-xs font-black text-slate-800">{service}</p><p className="mt-1 text-[10px] font-bold uppercase text-slate-400">{index === 0 && latency ? `${latency}ms` : status}</p></div>)}</div>
     </div>
   );
 }
