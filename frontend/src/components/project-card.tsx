@@ -36,15 +36,14 @@ const projectMeta = {
 export function ProjectCard({ project, index }: { project: Project; index: number }) {
   const Icon = project.icon;
   const meta = projectMeta[project.slug];
-  const reversed = index % 2 === 1;
 
   return (
     <motion.article
       className="group/project relative overflow-hidden border-b border-black/15 bg-[#07120f] text-white last:border-b-0 dark:border-white/15"
-      initial={{ opacity: 0, y: 42 }}
+      initial={{ opacity: 0, y: -42 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: "-120px" }}
+      transition={{ duration: 0.8, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
     >
       <motion.div
         className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${meta.wash}`}
@@ -53,12 +52,8 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       />
       <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,.55)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.55)_1px,transparent_1px)] [background-size:56px_56px]" />
 
-      <div className="relative grid min-h-[650px] lg:grid-cols-2">
-        <div
-          className={`flex flex-col justify-between border-white/15 p-6 sm:p-10 lg:p-14 ${
-            reversed ? "lg:order-2 lg:border-l" : "lg:border-r"
-          }`}
-        >
+      <div className="relative">
+        <div className="border-b border-white/15 p-6 sm:p-10 lg:p-14">
           <div>
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3">
@@ -86,7 +81,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
 
             <p className="mt-8 max-w-xl text-sm leading-7 text-slate-300 sm:text-base">{project.description}</p>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+            <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {project.features.slice(0, 4).map((feature) => (
                 <div key={feature} className="flex items-start gap-3 border-t border-white/15 pt-3 text-xs leading-5 text-slate-300">
                   <Check className={`mt-0.5 h-3.5 w-3.5 shrink-0 ${meta.text}`} />
@@ -96,7 +91,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
             </div>
           </div>
 
-          <div className="mt-12">
+          <div className="mt-12 flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
             <div className="flex flex-wrap gap-2">
               {project.technologies.slice(0, 6).map((tech) => (
                 <span key={tech} className="border border-white/15 bg-white/[0.04] px-3 py-1.5 font-mono text-[10px] font-bold text-slate-300">
@@ -104,7 +99,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
                 </span>
               ))}
             </div>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
               <Link href={project.path} className={`flex min-h-12 items-center justify-between gap-5 px-5 text-xs font-black uppercase text-[#07120f] transition hover:bg-white ${meta.glow}`}>
                 Explore case study <ArrowUpRight className="h-4 w-4" />
               </Link>
@@ -118,13 +113,13 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
           </div>
         </div>
 
-        <div className={`relative flex min-h-[520px] flex-col justify-center overflow-hidden p-6 sm:p-10 lg:p-14 ${reversed ? "lg:order-1" : ""}`}>
+        <div className="relative flex min-h-[520px] flex-col justify-center overflow-hidden p-6 sm:p-10 lg:p-14">
           <motion.div
             className={`absolute -right-20 top-10 h-52 w-52 rounded-full ${meta.glow} opacity-10 blur-3xl`}
             animate={{ x: [0, -45, 0], y: [0, 35, 0], scale: [1, 1.18, 1] }}
             transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
           />
-          <div className="relative">
+          <div className="relative mx-auto w-full max-w-6xl">
             <div className="mb-5 flex items-end justify-between gap-6">
               <div>
                 <p className="dossier-label text-slate-500">Interactive system preview</p>
