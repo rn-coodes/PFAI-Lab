@@ -61,12 +61,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <body>
         <Script id="theme-init" strategy="beforeInteractive">
-          {`try{const t=localStorage.getItem("theme");const d=t?t==="dark":matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.classList.toggle("dark",d)}catch(e){document.documentElement.classList.add("dark")}`}
+          {`try{const t=localStorage.getItem("theme");const d=t?t==="dark":true;document.documentElement.classList.toggle("dark",d)}catch(e){document.documentElement.classList.add("dark")}`}
         </Script>
         <AmbientBackground />
         <Navigation />
-        {children}
-        <Footer />
+        <div className="lg:pl-64">
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   );

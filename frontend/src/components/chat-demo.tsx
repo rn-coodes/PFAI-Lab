@@ -12,12 +12,16 @@ export function ChatDemo() {
   const [content, setContent] = useState("");
   const [connecting, setConnecting] = useState(true);
   const [connected, setConnected] = useState(false);
+  const [connectionError, setConnectionError] = useState("");
+  const [attempt, setAttempt] = useState(0);
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
     let active = true;
     async function connect() {
       try {
+        setConnecting(true);
+        setConnectionError("");
         const credentials = createDemoCredentials("chat");
         const auth = await apiRequest<{ token: string }>("/api/auth/register", {
           method: "POST",
@@ -27,13 +31,21 @@ export function ChatDemo() {
         const socket = new WebSocket(`${API_URL.replace(/^http/, "ws")}/ws?token=${auth.token}`);
         socketRef.current = socket;
         socket.onopen = () => { setConnected(true); setConnecting(false); };
-        socket.onclose = () => setConnected(false);
+        socket.onerror = () => {
+          setConnectionError("WebSocket connection failed. Retry the live session.");
+          setConnecting(false);
+        };
+        socket.onclose = () => {
+          setConnected(false);
+          setConnecting(false);
+        };
         socket.onmessage = (event) => {
           const message = JSON.parse(event.data) as Message;
           if (message.type === "presence") setOnline(message.online ?? []);
           else setMessages((current) => [...current, message]);
         };
-      } catch {
+      } catch (requestError) {
+        setConnectionError(requestError instanceof Error ? requestError.message : "Could not create the live chat session.");
         setConnecting(false);
       }
     }
@@ -42,7 +54,7 @@ export function ChatDemo() {
       active = false;
       socketRef.current?.close();
     };
-  }, []);
+  }, [attempt]);
 
   function sendMessage(event: React.FormEvent) {
     event.preventDefault();
@@ -65,6 +77,15 @@ export function ChatDemo() {
         </div>
         <div className="mt-8 border-t border-white/10 pt-5">
           <p className="text-xs leading-6 text-slate-500">Open this demo in another tab to see live presence and message broadcasting through Go channels.</p>
+          {connectionError && (
+            <button
+              type="button"
+              onClick={() => setAttempt((value) => value + 1)}
+              className="mt-4 w-full border border-rose-400/30 bg-rose-400/10 px-3 py-2 text-xs font-black text-rose-200 transition hover:bg-rose-400/20"
+            >
+              Retry connection
+            </button>
+          )}
         </div>
       </aside>
 

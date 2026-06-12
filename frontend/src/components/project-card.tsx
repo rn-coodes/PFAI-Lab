@@ -1,68 +1,56 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, CheckCircle2, Github } from "lucide-react";
+import { ArrowRight, Github, Radio, ShieldCheck, Users, Zap } from "lucide-react";
 import Link from "next/link";
-import { LanguageBadges } from "@/components/language-badges";
-import { VisualPanel } from "@/components/visual-panel";
 import type { Project } from "@/data/projects";
+
+const metrics = {
+  chat: [["124+", "Users", Users], ["98ms", "Latency", Zap], ["Live", "Socket", Radio]],
+  api: [["10+", "Endpoints", Zap], ["256-bit", "Security", ShieldCheck], ["100%", "Protected", Radio]],
+  crawler: [["1K+", "Pages/min", Zap], ["50+", "Workers", Users], ["99.5%", "Success", Radio]]
+} as const;
 
 export function ProjectCard({ project, index }: { project: Project; index: number }) {
   const Icon = project.icon;
-
   return (
     <motion.article
-      className="group overflow-hidden border border-slate-200/80 bg-white/75 p-5 shadow-panel backdrop-blur-2xl dark:border-white/10 dark:bg-white/[0.07]"
-      initial={{ opacity: 0, y: 28 }}
+      className={`group relative overflow-hidden border bg-[#07101f]/90 p-5 text-white shadow-panel ${
+        project.slug === "api" ? "border-violet-400/30" : project.slug === "crawler" ? "border-blue-400/30" : "border-cyan-400/30"
+      }`}
+      initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.62, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -8 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.08 }}
+      whileHover={{ y: -5 }}
     >
-      <VisualPanel kind={project.screenshots[0].kind} title={project.eyebrow} />
-      <div className="mt-6">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-200">
-              {project.eyebrow}
-            </p>
-            <h3 className="mt-2 text-2xl font-black text-slate-950 dark:text-white">{project.title}</h3>
-          </div>
-          <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${project.accent} text-slate-950 shadow-glow`}>
-            <Icon className="h-6 w-6" />
-          </span>
-        </div>
-        <p className="mt-4 min-h-24 text-sm leading-7 text-slate-600 dark:text-slate-300">{project.description}</p>
-
-        <div className="mt-5">
-          <LanguageBadges languages={project.languages} compact />
-        </div>
-
-        <div className="mt-5 grid gap-2">
-          {project.features.slice(0, 3).map((feature) => (
-            <div key={feature} className="flex gap-2 text-sm font-medium text-slate-600 dark:text-slate-300">
-              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-cyanGo" />
-              <span>{feature}</span>
+      <div className={`absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100 ${
+        project.slug === "api" ? "bg-violet-500/[0.06]" : project.slug === "crawler" ? "bg-blue-500/[0.06]" : "bg-cyan-500/[0.06]"
+      }`} />
+      <div className="relative">
+        <div className="flex items-start gap-4">
+          <span className={`grid h-16 w-16 shrink-0 place-items-center border bg-gradient-to-br ${project.accent} text-slate-950 shadow-glow`}><Icon className="h-8 w-8" /></span>
+          <div className="min-w-0">
+            <div className="flex items-start justify-between gap-3">
+              <Link href={`/projects/${project.slug}`} className="text-lg font-black transition hover:text-cyan-200">{project.title}</Link>
+              <span className="flex items-center gap-1 bg-emerald-300/10 px-2 py-1 text-[10px] font-black text-emerald-300"><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" />Live</span>
             </div>
-          ))}
+            <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-400">{project.description}</p>
+          </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-[1fr_auto] gap-2">
-          <Link
-            href={`/projects/${project.slug}`}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-black text-white transition hover:bg-cyanGo hover:text-slate-950 dark:bg-white dark:text-ink dark:hover:bg-cyanGo"
-          >
-            Open Project
-            <ArrowUpRight className="h-4 w-4" />
-          </Link>
-          <Link
-            href={project.github}
-            target="_blank"
-            aria-label={`${project.title} GitHub repository`}
-            className="grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white/80 text-slate-700 transition hover:-translate-y-1 hover:border-cyanGo hover:text-cyanGo dark:border-white/10 dark:bg-white/10 dark:text-white"
-          >
-            <Github className="h-4 w-4" />
-          </Link>
+        <div className="mt-5 flex flex-wrap gap-2">
+          {project.technologies.slice(0, 3).map((tech) => <span key={tech} className="border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[10px] font-bold text-cyan-200">{tech}</span>)}
+        </div>
+
+        <div className="mt-5 grid grid-cols-[1fr_1fr_1fr_auto] items-end gap-2 border-t border-white/10 pt-4">
+          {metrics[project.slug].map(([value, label, MetricIcon]) => (
+            <div key={label}><p className="flex items-center gap-1 text-xs font-black"><MetricIcon className="h-3.5 w-3.5 text-cyan-300" />{value}</p><p className="mt-1 text-[9px] text-slate-500">{label}</p></div>
+          ))}
+          <div className="flex gap-2">
+            <Link href={project.github} target="_blank" className="grid h-9 w-9 place-items-center border border-white/10 bg-white/[0.05] text-slate-400 transition hover:border-cyanGo hover:text-cyan-200" aria-label="GitHub repository"><Github className="h-4 w-4" /></Link>
+            <Link href={project.demo} className="grid h-9 w-9 place-items-center rounded-full bg-cyanGo text-slate-950 transition hover:scale-110" aria-label={`Open live ${project.title} demo`}><ArrowRight className="h-4 w-4" /></Link>
+          </div>
         </div>
       </div>
     </motion.article>
