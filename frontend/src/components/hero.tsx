@@ -28,7 +28,7 @@ export function Hero() {
             </div>
           </motion.div>
           <div className="mt-14 grid min-w-0 grid-cols-3 gap-3 border-t border-slate-200 pt-6 sm:gap-4">
-            {[["03", "Live products"], ["Go", "Core language"], ["24/7", "Backend online"]].map(([value, label]) => <div key={label} className="min-w-0"><p className="text-2xl font-black text-slate-950 sm:text-3xl">{value}</p><p className="mt-1 break-words text-[9px] font-bold uppercase tracking-[0.08em] text-slate-400 sm:text-[10px] sm:tracking-[0.12em]">{label}</p></div>)}
+            {[["03", "Live products"], ["Go", "Core language"], ["24/7", "Backend online"]].map(([value, label], index) => <motion.div key={label} className="min-w-0" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55 + index * 0.12 }} whileHover={{ y: -4 }}><p className="text-2xl font-black text-slate-950 sm:text-3xl">{value}</p><p className="mt-1 break-words text-[9px] font-bold uppercase tracking-[0.08em] text-slate-400 sm:text-[10px] sm:tracking-[0.12em]">{label}</p></motion.div>)}
           </div>
         </div>
 
