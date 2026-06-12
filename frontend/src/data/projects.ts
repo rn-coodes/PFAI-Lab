@@ -51,7 +51,7 @@ export const owner = {
 export const links = {
   github: "https://github.com/rn-coodes",
   mainRepository: "https://github.com/rn-coodes/PFAI-Lab",
-  api: "https://advanced-go-projects-backend-f24607089.onrender.com"
+  api: "https://advanced-go-backend-f24607089-production.up.railway.app"
 };
 
 export const projects: Project[] = [

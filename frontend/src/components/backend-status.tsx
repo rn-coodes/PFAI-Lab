@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { Activity, Cloud, RefreshCw } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "https://advanced-go-projects-backend-f24607089.onrender.com";
+const apiUrl =
+  process.env.NEXT_PUBLIC_API_URL ?? "https://advanced-go-backend-f24607089-production.up.railway.app";
 
 type Status = "checking" | "online" | "offline";
 
@@ -47,7 +48,7 @@ export function BackendStatus() {
             <Cloud className="h-5 w-5" />
           </span>
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-cyan-200">Render Backend</p>
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-cyan-200">Railway Backend</p>
             <p className="mt-1 text-sm font-bold text-slate-300">
               {status === "online" ? `Online${latency ? ` · ${latency}ms` : ""}` : status === "checking" ? "Checking service..." : "Awaiting deployment"}
             </p>

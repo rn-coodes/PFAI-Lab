@@ -6,7 +6,7 @@ Production-ready monorepo for Rehan (`F24607089`) at the National University of 
 
 - `frontend/`: Next.js 15 portfolio and project dashboard
 - `backend/`: Go API combining JWT authentication, WebSocket chat, and concurrent crawling
-- `render.yaml`: Render Blueprint for the Go backend
+- `backend/railway.json`: Railway deployment configuration for the Go backend
 
 ## Backend Routes
 
@@ -36,4 +36,9 @@ npm run dev
 ## Deployment
 
 - Frontend: Vercel
-- Backend: Render Blueprint using `render.yaml`
+- Backend: Railway
+
+## Live Services
+
+- Website: `https://frontend-rosy-eight-53.vercel.app`
+- Backend: `https://advanced-go-backend-f24607089-production.up.railway.app`
