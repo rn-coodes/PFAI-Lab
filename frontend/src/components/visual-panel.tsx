@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export function VisualPanel({ kind, title }: { kind: "chat" | "api" | "crawler"; title: string }) {
   return (
     <motion.div
-      className="relative overflow-hidden rounded-[1.75rem] border border-white/60 bg-slate-950 p-4 shadow-panel dark:border-white/10"
+      className="relative overflow-hidden border border-white/20 bg-slate-950 p-4 shadow-panel"
       whileHover={{ scale: 1.012 }}
       transition={{ type: "spring", stiffness: 220, damping: 24 }}
     >
@@ -15,7 +15,7 @@ export function VisualPanel({ kind, title }: { kind: "chat" | "api" | "crawler";
         animate={{ opacity: [0.65, 1, 0.65], scale: [1, 1.08, 1] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />
-      <div className="relative rounded-[1.25rem] border border-white/10 bg-white/[0.06] p-4 backdrop-blur">
+      <div className="relative border border-white/10 bg-white/[0.06] p-4 backdrop-blur">
         <div className="mb-4 flex items-center justify-between">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">{title}</p>

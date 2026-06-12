@@ -1,84 +1,51 @@
 "use client";
 
-import { Braces, BriefcaseBusiness, Home, Mail, UserRound } from "lucide-react";
+import { ArrowUpRight, Braces, Github, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "/", label: "Home", icon: Home },
-  { href: "/work", label: "Projects", icon: BriefcaseBusiness },
-  { href: "/profile", label: "About", icon: UserRound },
-  { href: "/connect", label: "Contact", icon: Mail }
+  { href: "/work", label: "Selected work" },
+  { href: "/profile", label: "Profile" },
+  { href: "/connect", label: "Connect" }
 ];
 
 export function Navigation() {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-900/5 bg-vapor/80 backdrop-blur-2xl dark:border-white/10 dark:bg-ink/75">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <Link href="/" className="flex min-w-0 items-center gap-3">
-          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-ink text-cyanGo shadow-glow dark:bg-white dark:text-ink">
-            <Braces className="h-5 w-5" />
-          </span>
-          <span className="min-w-0">
-            <span className="block truncate text-sm font-black uppercase tracking-[0.18em] text-slate-950 dark:text-white">
-              Go Showcase
-            </span>
-            <span className="block truncate text-xs font-medium text-slate-500 dark:text-slate-400">
-              Advanced Go Projects
-            </span>
+    <header className="sticky top-0 z-50 border-b border-black/15 bg-[#f1f4ef]/90 backdrop-blur-xl dark:border-white/15 dark:bg-[#07100e]/90">
+      <nav className="mx-auto grid max-w-[1480px] grid-cols-[1fr_auto] items-center px-4 sm:px-6 lg:grid-cols-[280px_1fr_auto] lg:px-8">
+        <Link href="/" className="flex h-16 items-center gap-3 border-r border-black/15 pr-6 dark:border-white/15">
+          <span className="grid h-9 w-9 place-items-center bg-[#07120f] text-cyan-300 dark:bg-cyan-300 dark:text-[#07120f]"><Braces className="h-5 w-5" /></span>
+          <span>
+            <span className="block text-sm font-black uppercase tracking-[0.12em]">Rehan / Go</span>
+            <span className="dossier-label block text-[9px] text-slate-500">Systems portfolio</span>
           </span>
         </Link>
 
-        <div className="hidden items-center rounded-full border border-slate-200/80 bg-white/80 p-1 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/10 md:flex">
-          {links.map((link) => {
-            const Icon = link.icon;
+        <div className="hidden h-16 items-center justify-end lg:flex">
+          {links.map((link, index) => {
             const active = pathname === link.href || (link.href === "/work" && pathname.startsWith("/work"));
             return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition",
-                  active
-                    ? "bg-ink text-white shadow-panel dark:bg-white dark:text-ink"
-                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
-                )}
-              >
-                <Icon className="h-4 w-4" />
-                {link.label}
+              <Link key={link.href} href={link.href} className={cn("flex h-full items-center border-l border-black/15 px-7 text-xs font-black uppercase transition dark:border-white/15", active ? "bg-[#07120f] text-white dark:bg-cyan-300 dark:text-[#07120f]" : "hover:bg-cyan-300/25")}>
+                <span className="mr-3 font-mono text-[9px] text-cyan-600 dark:text-cyan-300">{String(index + 1).padStart(2, "0")}</span>{link.label}
               </Link>
             );
           })}
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-end gap-2 border-l border-black/15 pl-4 dark:border-white/15">
+          <Link href="https://github.com/rn-coodes" target="_blank" className="hidden h-10 items-center gap-2 border border-black/15 px-3 text-xs font-black uppercase transition hover:bg-[#07120f] hover:text-white dark:border-white/15 dark:hover:bg-white dark:hover:text-black sm:flex"><Github className="h-4 w-4" /> GitHub <ArrowUpRight className="h-3 w-3" /></Link>
           <ThemeToggle />
+          <button type="button" onClick={() => setOpen(!open)} className="grid h-10 w-10 place-items-center border border-black/15 dark:border-white/15 lg:hidden" aria-label="Toggle navigation">{open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}</button>
         </div>
       </nav>
-
-      <div className="grid grid-cols-4 border-t border-slate-900/5 bg-white/75 dark:border-white/10 dark:bg-ink/80 md:hidden">
-        {links.map((link) => {
-          const Icon = link.icon;
-          const active = pathname === link.href || (link.href === "/work" && pathname.startsWith("/work"));
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "flex flex-col items-center gap-1 px-2 py-2 text-[11px] font-semibold",
-                active ? "text-cyanGo" : "text-slate-500 dark:text-slate-400"
-              )}
-            >
-              <Icon className="h-4 w-4" />
-              {link.label}
-            </Link>
-          );
-        })}
-      </div>
+      {open && <div className="border-t border-black/15 bg-[#f1f4ef] p-3 dark:border-white/15 dark:bg-[#07100e] lg:hidden">{links.map((link) => <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="flex items-center justify-between border-b border-black/15 px-3 py-4 text-sm font-black uppercase last:border-0 dark:border-white/15">{link.label}<ArrowUpRight className="h-4 w-4" /></Link>)}</div>}
     </header>
   );
 }

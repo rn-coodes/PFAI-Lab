@@ -1,41 +1,17 @@
-import { Github, Mail } from "lucide-react";
+import { ArrowUpRight, Github, Mail } from "lucide-react";
 import Link from "next/link";
-import { links } from "@/data/projects";
-
-const socials = [
-  { label: "GitHub", href: links.github, icon: Github },
-  { label: "Email", href: "mailto:rehanmalik42011@gmail.com", icon: Mail }
-];
 
 export function Footer() {
   return (
-    <footer className="border-t border-slate-900/5 bg-white/55 py-10 backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.03]">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-        <div>
-          <p className="text-sm font-black uppercase tracking-[0.2em] text-slate-950 dark:text-white">
-            Advanced Go Projects Showcase
-          </p>
-          <p className="mt-2 max-w-2xl text-sm text-slate-600 dark:text-slate-400">
-            Built for Rehan, F24607089, National University of Technology.
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          {socials.map((social) => {
-            const Icon = social.icon;
-            return (
-              <Link
-                key={social.label}
-                href={social.href}
-                target={social.href.startsWith("http") ? "_blank" : undefined}
-                className="grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:-translate-y-1 hover:border-cyanGo hover:text-cyanGo dark:border-white/10 dark:bg-white/10 dark:text-slate-200"
-                aria-label={social.label}
-              >
-                <Icon className="h-5 w-5" />
-              </Link>
-            );
-          })}
+    <footer className="mx-auto max-w-[1480px] border-x border-b border-black/15 bg-[#07120f] text-white dark:border-white/15">
+      <div className="grid lg:grid-cols-[1fr_auto]">
+        <div className="p-8 sm:p-12"><p className="dossier-label text-cyan-300">End of dossier</p><h2 className="mt-4 max-w-3xl text-4xl font-black sm:text-6xl">Let&apos;s build something that holds up under load.</h2></div>
+        <div className="grid grid-cols-2 border-t border-white/15 lg:grid-cols-1 lg:border-l lg:border-t-0">
+          <Link href="https://github.com/rn-coodes" target="_blank" className="flex min-w-36 items-center justify-between gap-5 border-r border-white/15 px-6 py-5 text-xs font-black uppercase transition hover:bg-white hover:text-black lg:border-b lg:border-r-0"><Github className="h-4 w-4" /> GitHub <ArrowUpRight className="h-4 w-4" /></Link>
+          <Link href="mailto:rehanmalik42011@gmail.com" className="flex min-w-36 items-center justify-between gap-5 px-6 py-5 text-xs font-black uppercase transition hover:bg-cyan-300 hover:text-black"><Mail className="h-4 w-4" /> Email <ArrowUpRight className="h-4 w-4" /></Link>
         </div>
       </div>
+      <div className="flex flex-wrap justify-between gap-3 border-t border-white/15 px-6 py-4 font-mono text-[9px] uppercase tracking-[0.14em] text-slate-500"><span>Rehan / F24607089 / National University of Technology</span><span>Go systems portfolio / 2026</span></div>
     </footer>
   );
 }
