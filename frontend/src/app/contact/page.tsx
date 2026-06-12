@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Github, Linkedin, Mail, Send } from "lucide-react";
+import { Github, Mail, Send } from "lucide-react";
 import Link from "next/link";
 import { AnimatedSection } from "@/components/animated-section";
 import { SectionHeading } from "@/components/section-heading";
@@ -12,8 +12,7 @@ export const metadata: Metadata = {
 
 const links = [
   { label: "Email", value: "rehanmalik42011@gmail.com", href: "mailto:rehanmalik42011@gmail.com", icon: Mail },
-  { label: "GitHub", value: "github.com/rn-coodes", href: portfolioLinks.github, icon: Github },
-  { label: "LinkedIn", value: "linkedin.com", href: "https://www.linkedin.com", icon: Linkedin }
+  { label: "GitHub", value: "github.com/rn-coodes", href: portfolioLinks.github, icon: Github }
 ];
 
 export default function ContactPage() {
@@ -26,7 +25,7 @@ export default function ContactPage() {
           description="Use the profile links below as placeholders for production contact destinations."
         />
 
-        <AnimatedSection className="mt-10 grid gap-5 md:grid-cols-3">
+        <AnimatedSection className="mt-10 grid gap-5 md:grid-cols-2">
           {links.map((item) => {
             const Icon = item.icon;
             return (

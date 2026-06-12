@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/"
     },
-    sitemap: "https://advanced-go-projects-showcase.vercel.app/sitemap.xml"
+    sitemap: "https://rehan-go-projects.vercel.app/sitemap.xml"
   };
 }

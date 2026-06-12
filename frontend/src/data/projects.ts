@@ -74,7 +74,7 @@ export const projects: Project[] = [
     technologies: ["Go", "Gorilla WebSocket", "Gin", "Channels", "Next.js", "Tailwind CSS"],
     languages: ["Go", "TypeScript", "CSS"],
     github: "https://github.com/rn-coodes/chat-project",
-    demo: `${links.api}/api/status`,
+    demo: "/demo/chat",
     accent: "from-cyan-400 via-sky-500 to-emerald-400",
     icon: MessageSquareText,
     screenshots: [
@@ -109,7 +109,7 @@ export const projects: Project[] = [
     technologies: ["Go", "Gin", "JWT", "Middleware", "REST", "Postman"],
     languages: ["Go", "JSON", "TypeScript"],
     github: "https://github.com/rn-coodes/jwt-api-project",
-    demo: `${links.api}/`,
+    demo: "/demo/api",
     accent: "from-emerald-400 via-teal-500 to-cyan-400",
     icon: LockKeyhole,
     screenshots: [
@@ -144,7 +144,7 @@ export const projects: Project[] = [
     technologies: ["Go", "Goroutines", "Channels", "HTTP", "HTML Parser", "Concurrency"],
     languages: ["Go", "HTML", "TypeScript"],
     github: "https://github.com/rn-coodes/web-crawler-project",
-    demo: `${links.api}/health`,
+    demo: "/demo/crawler",
     accent: "from-amber-300 via-orange-500 to-rose-500",
     icon: Network,
     screenshots: [

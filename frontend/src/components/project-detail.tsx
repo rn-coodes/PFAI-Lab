@@ -42,7 +42,6 @@ export function ProjectDetail({ project }: { project: Project }) {
               </Link>
               <Link
                 href={project.demo}
-                target="_blank"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/75 px-6 py-3 text-sm font-black text-slate-800 transition hover:-translate-y-1 hover:border-cyanGo hover:text-cyanGo dark:border-white/10 dark:bg-white/10 dark:text-white"
               >
                 <ExternalLink className="h-4 w-4" />

@@ -12,7 +12,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
 
   return (
     <motion.article
-      className="group overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white/75 p-5 shadow-panel backdrop-blur-2xl dark:border-white/10 dark:bg-white/[0.07]"
+      className="group overflow-hidden border border-slate-200/80 bg-white/75 p-5 shadow-panel backdrop-blur-2xl dark:border-white/10 dark:bg-white/[0.07]"
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}

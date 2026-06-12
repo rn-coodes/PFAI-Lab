@@ -5,11 +5,13 @@ import { ProfileCard } from "@/components/profile-card";
 import { ProjectGrid } from "@/components/project-grid";
 import { SectionHeading } from "@/components/section-heading";
 import { StatsGrid } from "@/components/stats-grid";
+import { TechMarquee } from "@/components/tech-marquee";
 
 export default function HomePage() {
   return (
     <main>
       <Hero />
+      <TechMarquee />
       <div className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
         <AnimatedSection className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
           <ProfileCard />

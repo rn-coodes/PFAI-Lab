@@ -11,7 +11,7 @@ const description =
   "A modern SaaS-style portfolio hub for Rehan's advanced Golang projects: real-time chat, JWT REST API, and concurrent web crawler.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://advanced-go-projects-showcase.vercel.app"),
+  metadataBase: new URL("https://rehan-go-projects.vercel.app"),
   title: {
     default: title,
     template: `%s | ${title}`
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     title,
     description,
     type: "website",
-    url: "https://advanced-go-projects-showcase.vercel.app",
+    url: "https://rehan-go-projects.vercel.app",
     siteName: title,
     images: [{ url: "/og.svg", width: 1200, height: 630, alt: title }]
   },
