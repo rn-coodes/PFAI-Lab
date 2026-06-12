@@ -20,7 +20,7 @@ export async function apiRequest<T>(path: string, options?: RequestInit): Promis
 export function createDemoCredentials(prefix: string) {
   return {
     name: "Rehan Demo",
-    email: `${prefix}-${Date.now()}@example.com`,
+    email: `${prefix}-${Date.now()}@demo.local`,
     password: "demo-password-246"
   };
 }
