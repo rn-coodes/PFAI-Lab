@@ -30,12 +30,15 @@ Go is the primary project language across the portfolio. Supporting languages an
 ## Routes
 
 - `/`
-- `/projects`
-- `/projects/chat`
-- `/projects/api`
-- `/projects/crawler`
-- `/about`
-- `/contact`
+- `/work`
+- `/work/realtime-go-chat`
+- `/work/secure-jwt-api`
+- `/work/concurrent-web-crawler`
+- `/live/realtime-go-chat`
+- `/live/jwt-auth-console`
+- `/live/concurrent-web-crawler`
+- `/profile`
+- `/connect`
 - Custom `404`
 
 ## Folder Structure

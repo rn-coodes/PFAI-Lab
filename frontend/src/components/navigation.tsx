@@ -8,9 +8,9 @@ import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/", label: "Home", icon: Home },
-  { href: "/projects", label: "Projects", icon: BriefcaseBusiness },
-  { href: "/about", label: "About", icon: UserRound },
-  { href: "/contact", label: "Contact", icon: Mail }
+  { href: "/work", label: "Projects", icon: BriefcaseBusiness },
+  { href: "/profile", label: "About", icon: UserRound },
+  { href: "/connect", label: "Contact", icon: Mail }
 ];
 
 export function Navigation() {
@@ -36,7 +36,7 @@ export function Navigation() {
         <div className="hidden items-center rounded-full border border-slate-200/80 bg-white/80 p-1 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/10 md:flex">
           {links.map((link) => {
             const Icon = link.icon;
-            const active = pathname === link.href || (link.href === "/projects" && pathname.startsWith("/projects"));
+            const active = pathname === link.href || (link.href === "/work" && pathname.startsWith("/work"));
             return (
               <Link
                 key={link.href}
@@ -63,7 +63,7 @@ export function Navigation() {
       <div className="grid grid-cols-4 border-t border-slate-900/5 bg-white/75 dark:border-white/10 dark:bg-ink/80 md:hidden">
         {links.map((link) => {
           const Icon = link.icon;
-          const active = pathname === link.href || (link.href === "/projects" && pathname.startsWith("/projects"));
+          const active = pathname === link.href || (link.href === "/work" && pathname.startsWith("/work"));
           return (
             <Link
               key={link.href}

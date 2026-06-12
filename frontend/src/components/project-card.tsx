@@ -49,7 +49,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
 
         <div className="mt-6 grid grid-cols-[1fr_auto] gap-2">
           <Link
-            href={`/projects/${project.slug}`}
+            href={project.path}
             className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-black text-white transition hover:bg-cyanGo hover:text-slate-950 dark:bg-white dark:text-ink dark:hover:bg-cyanGo"
           >
             Open Project

@@ -16,7 +16,7 @@ export function DemoShell({ eyebrow, title, description, repository, status, chi
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Link
-            href="/projects"
+            href="/work"
             className="inline-flex items-center gap-2 text-sm font-black text-slate-600 transition hover:text-cyan-700 dark:text-slate-300 dark:hover:text-cyan-200"
           >
             <ArrowLeft className="h-4 w-4" />

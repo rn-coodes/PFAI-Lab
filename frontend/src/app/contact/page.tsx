@@ -52,7 +52,7 @@ export default function ContactPage() {
               <h2 className="mt-2 text-2xl font-black">Next.js 15, TypeScript, Tailwind CSS, Framer Motion, Vercel</h2>
             </div>
             <Link
-              href="/projects"
+              href="/work"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-cyanGo px-6 py-3 text-sm font-black text-slate-950 transition hover:-translate-y-1 hover:bg-white"
             >
               View Projects
