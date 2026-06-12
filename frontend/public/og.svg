@@ -1,0 +1,15 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#09111F"/>
+  <circle cx="172" cy="104" r="240" fill="#00ADD8" opacity="0.23"/>
+  <circle cx="1052" cy="154" r="220" fill="#34D399" opacity="0.16"/>
+  <circle cx="760" cy="648" r="280" fill="#F59E0B" opacity="0.13"/>
+  <rect x="72" y="74" width="1056" height="482" rx="42" fill="white" fill-opacity="0.07" stroke="white" stroke-opacity="0.14"/>
+  <text x="112" y="170" fill="#67E8F9" font-family="Arial, sans-serif" font-size="30" font-weight="800" letter-spacing="7">GO-FIRST PORTFOLIO</text>
+  <text x="112" y="276" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="78" font-weight="900">Advanced Go</text>
+  <text x="112" y="364" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="78" font-weight="900">Projects Showcase</text>
+  <text x="116" y="438" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="30" font-weight="500">Realtime Chat • JWT REST API • Concurrent Web Crawler</text>
+  <rect x="112" y="474" width="238" height="58" rx="29" fill="#00ADD8"/>
+  <text x="152" y="513" fill="#09111F" font-family="Arial, sans-serif" font-size="24" font-weight="900">Rehan F24607089</text>
+  <rect x="790" y="164" width="242" height="242" rx="36" fill="#00ADD8" fill-opacity="0.16" stroke="#00ADD8" stroke-opacity="0.5"/>
+  <text x="846" y="318" fill="#67E8F9" font-family="Arial, sans-serif" font-size="104" font-weight="900">Go</text>
+</svg>

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: advanced-go-projects-backend-f24607089
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_PATH
+        value: /app/data/platform.db
+      - key: ALLOWED_ORIGINS
+        value: https://frontend-rosy-eight-53.vercel.app,http://localhost:3000,http://localhost:3001
+      - key: JWT_SECRET
+        generateValue: true

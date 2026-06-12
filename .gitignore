@@ -1,0 +1,8 @@
+.env
+.env*.local
+*.db
+*.log
+.next/
+node_modules/
+coverage.out
+.vercel/
