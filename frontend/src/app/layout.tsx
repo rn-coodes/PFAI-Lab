@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { AmbientBackground } from "@/components/ambient-background";
 import { Footer } from "@/components/footer";
 import { Navigation } from "@/components/navigation";
+import { SiteMotion } from "@/components/site-motion";
 import "./globals.css";
 
 const title = "Advanced Go Projects Showcase";
@@ -61,8 +62,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <AmbientBackground />
         <Navigation />
-        {children}
-        <Footer />
+        <SiteMotion>
+          {children}
+          <Footer />
+        </SiteMotion>
       </body>
     </html>
   );

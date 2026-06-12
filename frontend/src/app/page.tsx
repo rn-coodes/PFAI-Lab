@@ -7,6 +7,7 @@ import { AnimatedSection } from "@/components/animated-section";
 import { BackendStatus } from "@/components/backend-status";
 import { Hero } from "@/components/hero";
 import { ProjectGrid } from "@/components/project-grid";
+import { RevealHeading } from "@/components/reveal-heading";
 import { TechMarquee } from "@/components/tech-marquee";
 import { owner } from "@/data/projects";
 
@@ -19,7 +20,7 @@ export default function HomePage() {
       <section className="px-3 py-20 sm:px-6">
         <AnimatedSection className="mx-auto max-w-7xl">
           <motion.div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.65 }}>
-            <div><p className="text-xs font-black uppercase tracking-[0.18em] text-blue-600">Capabilities</p><h2 className="mt-3 max-w-2xl text-4xl font-black leading-tight text-slate-950 sm:text-6xl">Backend engineering with visible results.</h2></div>
+            <div><p className="text-xs font-black uppercase tracking-[0.18em] text-blue-600">Capabilities</p><RevealHeading className="mt-3 max-w-2xl text-4xl font-black leading-tight text-slate-950 sm:text-6xl">Backend engineering with visible results.</RevealHeading></div>
             <p className="max-w-md text-sm leading-7 text-slate-600">Each project focuses on a practical backend challenge and ships with a working interface, source code, and deployed service.</p>
           </motion.div>
           <div className="mt-10 grid gap-4 md:grid-cols-3">
@@ -33,7 +34,7 @@ export default function HomePage() {
 
       <section className="px-3 pb-20 sm:px-6">
         <div className="mx-auto max-w-7xl">
-          <motion.div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end" initial={{ opacity: 0, x: -35 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.65 }}><div><p className="text-xs font-black uppercase tracking-[0.18em] text-blue-600">Selected projects</p><h2 className="mt-3 text-4xl font-black text-slate-950 sm:text-6xl">Built in Go. Ready to run.</h2></div><Link href="/work" className="group flex items-center gap-2 text-sm font-black text-blue-600">View all work <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></Link></motion.div>
+          <motion.div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end" initial={{ opacity: 0, x: -35 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.65 }}><div><p className="text-xs font-black uppercase tracking-[0.18em] text-blue-600">Selected projects</p><RevealHeading className="mt-3 text-4xl font-black text-slate-950 sm:text-6xl">Built in Go. Ready to run.</RevealHeading></div><Link href="/work" className="group flex items-center gap-2 text-sm font-black text-blue-600">View all work <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></Link></motion.div>
           <ProjectGrid />
         </div>
       </section>
