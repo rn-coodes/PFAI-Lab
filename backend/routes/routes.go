@@ -3,6 +3,8 @@ package routes
 import (
 	"database/sql"
 	"net/http"
+	"runtime"
+	"sync/atomic"
 	"time"
 
 	"advanced-go-realtime-backend-platform/auth"
@@ -22,7 +24,13 @@ func Setup(cfg config.Config, db *sql.DB, hub *ws.Hub) *gin.Engine {
 	}
 
 	router := gin.New()
+	startedAt := time.Now().UTC()
+	var requests atomic.Uint64
 	router.Use(gin.Logger(), gin.Recovery())
+	router.Use(func(c *gin.Context) {
+		requests.Add(1)
+		c.Next()
+	})
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     cfg.AllowedOrigins,
 		AllowMethods:     []string{http.MethodGet, http.MethodPost, http.MethodOptions},
@@ -64,9 +72,27 @@ func Setup(cfg config.Config, db *sql.DB, hub *ws.Hub) *gin.Engine {
 			"crawler":   "ready",
 		})
 	})
+	api.GET("/telemetry", func(c *gin.Context) {
+		var memory runtime.MemStats
+		runtime.ReadMemStats(&memory)
+		activeSockets, deliveredMessages := hub.Stats()
+		c.JSON(http.StatusOK, gin.H{
+			"status":            "online",
+			"startedAt":         startedAt.Format(time.RFC3339),
+			"uptimeSeconds":     int64(time.Since(startedAt).Seconds()),
+			"requests":          requests.Load(),
+			"goroutines":        runtime.NumGoroutine(),
+			"memoryMB":          memory.Alloc / 1024 / 1024,
+			"activeWebSockets":  activeSockets,
+			"deliveredMessages": deliveredMessages,
+			"crawlerMaxWorkers": 6,
+			"goVersion":         runtime.Version(),
+		})
+	})
 
 	api.POST("/auth/register", authHandler.Register)
 	api.POST("/auth/login", authHandler.Login)
+	api.POST("/auth/demo-session", authHandler.DemoSession)
 
 	protected := api.Group("")
 	protected.Use(middleware.JWTAuth(cfg.JWTSecret))

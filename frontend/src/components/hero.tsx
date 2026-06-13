@@ -5,6 +5,7 @@ import { ArrowRight, Cable, Github, Network, Radio, ShieldCheck, Sparkles } from
 import Link from "next/link";
 import { links } from "@/data/projects";
 import { MagneticLink } from "@/components/magnetic-link";
+import { formatUptime, useTelemetry } from "@/lib/telemetry";
 
 const services = [
   { label: "WebSockets", detail: "Realtime hub", icon: Cable, position: "left-0 top-[18%]", color: "bg-cyan-300 text-cyan-950" },
@@ -13,6 +14,7 @@ const services = [
 ];
 
 export function Hero() {
+  const { telemetry, latency } = useTelemetry();
   return (
     <section className="overflow-hidden px-3 pb-12 pt-8 sm:px-6 sm:pt-12">
       <div className="mx-auto grid min-h-[720px] max-w-7xl overflow-hidden rounded-lg border border-slate-200 bg-white shadow-[0_30px_100px_rgba(15,23,42,0.10)] lg:grid-cols-[1.05fr_0.95fr]">
@@ -29,7 +31,7 @@ export function Hero() {
             </div>
           </motion.div>
           <div className="mt-14 grid min-w-0 grid-cols-3 gap-3 border-t border-slate-200 pt-6 sm:gap-4">
-            {[["03", "Live products"], ["Go", "Core language"], ["24/7", "Backend online"]].map(([value, label], index) => <motion.div key={label} className="min-w-0" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55 + index * 0.12 }} whileHover={{ y: -4 }}><p className="text-2xl font-black text-slate-950 sm:text-3xl">{value}</p><p className="mt-1 break-words text-[9px] font-bold uppercase tracking-[0.08em] text-slate-400 sm:text-[10px] sm:tracking-[0.12em]">{label}</p></motion.div>)}
+            {[["03", "Live products"], [latency === null ? "--" : `${latency}ms`, "Measured latency"], [formatUptime(telemetry?.uptimeSeconds), "Current uptime"]].map(([value, label], index) => <motion.div key={label} className="min-w-0" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55 + index * 0.12 }} whileHover={{ y: -4 }}><p className="text-2xl font-black text-slate-950 sm:text-3xl">{value}</p><p className="mt-1 break-words text-[9px] font-bold uppercase tracking-[0.08em] text-slate-400 sm:text-[10px] sm:tracking-[0.12em]">{label}</p></motion.div>)}
           </div>
         </div>
 
@@ -66,7 +68,7 @@ export function Hero() {
                 return <motion.div key={service.label} className={`absolute ${service.position} z-10 flex items-center gap-3 rounded-lg border border-white/80 bg-white/90 p-3 shadow-[0_16px_40px_rgba(15,23,42,.14)] backdrop-blur`} initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1, y: [0, index % 2 ? -8 : 8, 0] }} transition={{ opacity: { delay: 0.55 + index * 0.15 }, scale: { delay: 0.55 + index * 0.15 }, y: { duration: 4 + index, repeat: Infinity, ease: "easeInOut" } }} whileHover={{ scale: 1.08, y: -5 }}><span className={`grid h-10 w-10 place-items-center rounded-md ${service.color}`}><Icon className="h-4 w-4" /></span><span className="hidden sm:block"><span className="block text-xs font-black text-slate-950">{service.label}</span><span className="mt-0.5 block text-[9px] font-bold uppercase tracking-[0.1em] text-slate-400">{service.detail}</span></span></motion.div>;
               })}
 
-              <motion.div className="absolute bottom-0 right-[7%] z-10 rounded-lg border border-white/80 bg-white/90 p-4 shadow-[0_16px_40px_rgba(15,23,42,.14)] backdrop-blur" animate={{ y: [0, -7, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}><div className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-blue-600" /><p className="text-[9px] font-black uppercase tracking-[0.12em] text-blue-600">Live runtime</p></div><p className="mt-2 text-xl font-black text-slate-950">3 systems</p><p className="text-[10px] font-bold text-emerald-600">All operational</p></motion.div>
+              <motion.div className="absolute bottom-0 right-[7%] z-10 rounded-lg border border-white/80 bg-white/90 p-4 shadow-[0_16px_40px_rgba(15,23,42,.14)] backdrop-blur" animate={{ y: [0, -7, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}><div className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-blue-600" /><p className="text-[9px] font-black uppercase tracking-[0.12em] text-blue-600">Live runtime</p></div><p className="mt-2 text-xl font-black text-slate-950">{telemetry?.goVersion?.replace("go", "Go ") ?? "Checking"}</p><p className={`text-[10px] font-bold ${telemetry ? "text-emerald-600" : "text-slate-400"}`}>{telemetry ? `${telemetry.goroutines} goroutines` : "Connecting to Railway"}</p></motion.div>
             </div>
           </div>
         </div>

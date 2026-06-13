@@ -49,6 +49,16 @@ func (h *Handler) Serve(c *gin.Context) {
 		header := c.GetHeader("Authorization")
 		token = strings.TrimPrefix(header, "Bearer ")
 	}
+	selectedProtocol := ""
+	if token == "" {
+		for _, protocol := range gorilla.Subprotocols(c.Request) {
+			if strings.HasPrefix(protocol, "auth.") {
+				token = strings.TrimPrefix(protocol, "auth.")
+				selectedProtocol = protocol
+				break
+			}
+		}
+	}
 
 	claims, err := auth.ValidateToken(h.cfg.JWTSecret, token)
 	if err != nil {
@@ -57,7 +67,11 @@ func (h *Handler) Serve(c *gin.Context) {
 	}
 
 	name, email := h.lookupUser(claims.UserID, claims.Name, claims.Email)
-	conn, err := h.upgrader.Upgrade(c.Writer, c.Request, nil)
+	responseHeaders := http.Header{}
+	if selectedProtocol != "" {
+		responseHeaders.Set("Sec-WebSocket-Protocol", selectedProtocol)
+	}
+	conn, err := h.upgrader.Upgrade(c.Writer, c.Request, responseHeaders)
 	if err != nil {
 		return
 	}

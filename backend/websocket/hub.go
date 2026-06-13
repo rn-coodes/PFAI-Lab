@@ -1,6 +1,7 @@
 package websocket
 
 import (
+	"sync/atomic"
 	"time"
 )
 
@@ -18,6 +19,8 @@ type Hub struct {
 	register   chan *Client
 	unregister chan *Client
 	broadcast  chan Message
+	active     atomic.Int64
+	delivered  atomic.Uint64
 }
 
 func NewHub() *Hub {
@@ -34,6 +37,7 @@ func (h *Hub) Run() {
 		select {
 		case client := <-h.register:
 			h.clients[client] = true
+			h.active.Add(1)
 			h.broadcastOnlineUsers()
 			h.broadcast <- Message{
 				Type:      "system",
@@ -43,6 +47,7 @@ func (h *Hub) Run() {
 		case client := <-h.unregister:
 			if _, ok := h.clients[client]; ok {
 				delete(h.clients, client)
+				h.active.Add(-1)
 				close(client.send)
 				h.broadcastOnlineUsers()
 				h.broadcast <- Message{
@@ -55,13 +60,19 @@ func (h *Hub) Run() {
 			for client := range h.clients {
 				select {
 				case client.send <- message:
+					h.delivered.Add(1)
 				default:
 					delete(h.clients, client)
+					h.active.Add(-1)
 					close(client.send)
 				}
 			}
 		}
 	}
+}
+
+func (h *Hub) Stats() (active int64, delivered uint64) {
+	return h.active.Load(), h.delivered.Load()
 }
 
 func (h *Hub) Register(client *Client) {

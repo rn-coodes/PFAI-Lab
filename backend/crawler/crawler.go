@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"net/url"
 	"strings"
@@ -38,6 +39,7 @@ type CrawlResponse struct {
 	Results    []PageResult `json:"results"`
 	Crawled    int          `json:"crawled"`
 	Failed     int          `json:"failed"`
+	Workers    int          `json:"workers"`
 	DurationMS int64        `json:"durationMs"`
 }
 
@@ -47,10 +49,15 @@ type Service struct {
 }
 
 func NewService() *Service {
+	client := &http.Client{Timeout: 8 * time.Second}
+	client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
+		if len(via) >= 5 {
+			return fmt.Errorf("too many redirects")
+		}
+		return validateTarget(req.Context(), req.URL)
+	}
 	return &Service{
-		client: &http.Client{
-			Timeout: 8 * time.Second,
-		},
+		client:  client,
 		limiter: rate.NewLimiter(rate.Every(150*time.Millisecond), 3),
 	}
 }
@@ -59,6 +66,9 @@ func (s *Service) Crawl(ctx context.Context, rawURL string, maxPages int) (Crawl
 	start := time.Now()
 	root, err := normalizeURL(rawURL)
 	if err != nil {
+		return CrawlResponse{}, err
+	}
+	if err := validateTarget(ctx, root); err != nil {
 		return CrawlResponse{}, err
 	}
 
@@ -143,6 +153,7 @@ func (s *Service) Crawl(ctx context.Context, rawURL string, maxPages int) (Crawl
 		Results:    results,
 		Crawled:    len(results),
 		Failed:     failed,
+		Workers:    workers,
 		DurationMS: time.Since(start).Milliseconds(),
 	}, nil
 }
@@ -150,6 +161,15 @@ func (s *Service) Crawl(ctx context.Context, rawURL string, maxPages int) (Crawl
 func (s *Service) fetchPage(ctx context.Context, pageURL string, root *url.URL) (PageResult, []string) {
 	start := time.Now()
 	result := PageResult{URL: pageURL}
+	target, err := url.Parse(pageURL)
+	if err != nil {
+		result.Error = "invalid page URL"
+		return result, nil
+	}
+	if err := validateTarget(ctx, target); err != nil {
+		result.Error = err.Error()
+		return result, nil
+	}
 
 	if err := s.limiter.Wait(ctx); err != nil {
 		result.Error = err.Error()
@@ -208,6 +228,27 @@ func normalizeURL(rawURL string) (*url.URL, error) {
 
 	parsed.Fragment = ""
 	return parsed, nil
+}
+
+func validateTarget(ctx context.Context, target *url.URL) error {
+	host := strings.ToLower(strings.TrimSuffix(target.Hostname(), "."))
+	if host == "" {
+		return fmt.Errorf("url must include a host")
+	}
+	if host == "localhost" || strings.HasSuffix(host, ".localhost") {
+		return fmt.Errorf("private network targets are not allowed")
+	}
+
+	ips, err := net.DefaultResolver.LookupIP(ctx, "ip", host)
+	if err != nil {
+		return fmt.Errorf("could not resolve target host")
+	}
+	for _, ip := range ips {
+		if ip.IsLoopback() || ip.IsPrivate() || ip.IsLinkLocalUnicast() || ip.IsLinkLocalMulticast() || ip.IsUnspecified() {
+			return fmt.Errorf("private network targets are not allowed")
+		}
+	}
+	return nil
 }
 
 func parseHTML(body []byte, base, root *url.URL) (string, []string) {

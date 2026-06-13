@@ -17,10 +17,8 @@ export async function apiRequest<T>(path: string, options?: RequestInit): Promis
   return body;
 }
 
-export function createDemoCredentials(prefix: string) {
-  return {
-    name: "Rehan Demo",
-    email: `${prefix}-${Date.now()}@example.com`,
-    password: "demo-password-246"
-  };
+export function createDemoSession() {
+  return apiRequest<{ token: string; user: { id: number; name: string; email: string; createdAt: string } }>("/api/auth/demo-session", {
+    method: "POST"
+  });
 }

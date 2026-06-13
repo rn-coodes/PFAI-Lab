@@ -3,8 +3,10 @@ package auth
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	"advanced-go-realtime-backend-platform/config"
 	"advanced-go-realtime-backend-platform/models"
@@ -103,6 +105,22 @@ func (h *Handler) Login(c *gin.Context) {
 	})
 }
 
+func (h *Handler) DemoSession(c *gin.Context) {
+	now := time.Now().UTC()
+	user := models.UserResponse{
+		ID:        0,
+		Name:      "Rehan Demo",
+		Email:     fmt.Sprintf("demo-%d@example.com", now.UnixNano()),
+		CreatedAt: now.Format(time.RFC3339),
+	}
+	token, err := GenerateToken(h.Config.JWTSecret, user.ID, user.Email, user.Name)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not issue demo token"})
+		return
+	}
+	c.JSON(http.StatusOK, models.AuthResponse{Token: token, User: user})
+}
+
 func (h *Handler) Profile(c *gin.Context) {
 	value, ok := c.Get("userID")
 	if !ok {
@@ -113,6 +131,12 @@ func (h *Handler) Profile(c *gin.Context) {
 	userID, ok := value.(int64)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid user context"})
+		return
+	}
+	if userID == 0 {
+		name, _ := c.Get("name")
+		email, _ := c.Get("email")
+		c.JSON(http.StatusOK, gin.H{"user": models.UserResponse{ID: 0, Name: fmt.Sprint(name), Email: fmt.Sprint(email), CreatedAt: time.Now().UTC().Format(time.RFC3339)}})
 		return
 	}
 

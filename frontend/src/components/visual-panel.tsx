@@ -20,7 +20,7 @@ export function VisualPanel({ kind, title }: { kind: "chat" | "api" | "crawler";
         <div className="mb-4 flex items-center justify-between">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.18em] text-cyan-200">{title}</p>
-            <p className="mt-1 text-[11px] text-slate-400">Go runtime telemetry</p>
+            <p className="mt-1 text-[11px] text-slate-400">Animated interface concept</p>
           </div>
           <div className="flex gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-rose-400" />
@@ -50,7 +50,7 @@ function ChatMock() {
   return (
     <div className="grid gap-3 sm:grid-cols-[0.8fr_1.2fr]">
       <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-3">
-        {["main-room", "go-workers", "release"].map((room, index) => (
+        {["general-go", "socket-hub", "presence"].map((room, index) => (
           <div
             key={room}
             className={cn(
@@ -59,7 +59,7 @@ function ChatMock() {
             )}
           >
             <span>{room}</span>
-            <span>{index === 0 ? "24" : "8"}</span>
+            <span className={index === 0 ? "text-emerald-300" : "text-slate-500"}>{index === 0 ? "live" : "channel"}</span>
           </div>
         ))}
       </div>
@@ -67,7 +67,7 @@ function ChatMock() {
         <div className="space-y-3">
           {[
           ["Rehan", "WebSocket hub online", "w-9/12"],
-          ["Go", "Broadcast delivered in 18ms", "w-7/12"]
+          ["Go", "Broadcast delivered to connected clients", "w-7/12"]
         ].map(([name, text, width]) => (
           <motion.div
             key={text}
@@ -102,7 +102,7 @@ function ApiMock() {
   const routes = [
     ["POST", "/auth/login", "200 OK", "bg-emerald-400"],
     ["GET", "/api/profile", "200 OK", "bg-cyan-400"],
-    ["GET", "/api/admin", "401 Unauthorized", "bg-amber-300"]
+    ["POST", "/auth/demo-session", "200 OK", "bg-amber-300"]
   ];
 
   return (

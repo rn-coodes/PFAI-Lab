@@ -33,7 +33,7 @@ export function Navigation() {
 
         <div className="flex items-center gap-2">
           <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.96 }}><Link href="https://github.com/rn-coodes" target="_blank" className="premium-button hidden items-center gap-2 rounded-md bg-slate-950 px-4 py-2.5 text-xs font-black text-white transition hover:bg-blue-600 sm:flex"><Github className="h-4 w-4" /> GitHub <ArrowUpRight className="h-3.5 w-3.5" /></Link></motion.div>
-          <button type="button" onClick={() => setOpen(!open)} className="grid h-10 w-10 place-items-center rounded-md border border-slate-200 bg-white md:hidden" aria-label="Toggle navigation">{open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}</button>
+          <button type="button" onClick={() => setOpen(!open)} className="grid h-10 w-10 place-items-center rounded-md border border-slate-200 bg-white md:hidden" aria-label="Toggle navigation" aria-expanded={open}>{open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}</button>
         </div>
       </motion.nav>
       <AnimatePresence>

@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Bell, CheckCheck, Hash, LoaderCircle, MessageSquareText, Plus, Radio, Send, Smile, Users, Wifi, WifiOff } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { API_URL, apiRequest, createDemoCredentials } from "@/lib/api";
+import { API_URL, createDemoSession } from "@/lib/api";
 
 type Message = { type: string; user?: string; content?: string; timestamp: string; online?: string[] };
 export function ChatDemo() {
@@ -19,10 +19,9 @@ export function ChatDemo() {
     let active = true;
     async function connect() {
       try {
-        const credentials = createDemoCredentials("chat");
-        const auth = await apiRequest<{ token: string }>("/api/auth/register", { method: "POST", body: JSON.stringify(credentials) });
+        const auth = await createDemoSession();
         if (!active) return;
-        const socket = new WebSocket(`${API_URL.replace(/^http/, "ws")}/ws?token=${auth.token}`);
+        const socket = new WebSocket(`${API_URL.replace(/^http/, "ws")}/ws`, [`auth.${auth.token}`]);
         socketRef.current = socket;
         socket.onopen = () => { setConnected(true); setConnecting(false); };
         socket.onclose = () => setConnected(false);
@@ -40,9 +39,8 @@ export function ChatDemo() {
   function sendMessage(event: React.FormEvent) {
     event.preventDefault();
     const value = content.trim();
-    if (!value) return;
-    if (socketRef.current?.readyState === WebSocket.OPEN) socketRef.current.send(JSON.stringify({ content: value }));
-    else setMessages((current) => [...current, { type: "message", user: "Rehan Demo", content: value, timestamp: new Date().toISOString() }]);
+    if (!value || socketRef.current?.readyState !== WebSocket.OPEN) return;
+    socketRef.current.send(JSON.stringify({ content: value }));
     setContent("");
     setToast(true);
     window.setTimeout(() => setToast(false), 2200);
@@ -71,7 +69,7 @@ export function ChatDemo() {
           {!messages.length && <div className="grid min-h-64 place-items-center rounded-lg border border-dashed border-white/10 bg-white/[0.02] text-center"><div><MessageSquareText className="mx-auto h-8 w-8 text-slate-600" /><p className="mt-4 text-sm font-black text-slate-300">No messages yet</p><p className="mt-2 max-w-xs text-xs leading-5 text-slate-500">{connected ? "Send the first real message, or open this demo in another tab to test live broadcasting." : "Waiting for the authenticated WebSocket connection."}</p></div></div>}
         </div>
         <form onSubmit={sendMessage} className="p-4 sm:p-6">
-          <div className="min-w-0 rounded-lg border border-white/10 bg-white/[0.045] p-2 focus-within:border-cyan-400/60"><input value={content} onChange={(event) => setContent(event.target.value)} placeholder="Message #general-go" className="h-10 min-w-0 w-full bg-transparent px-2 text-sm text-white outline-none" /><div className="flex items-center justify-between border-t border-white/10 px-2 pt-2"><div className="flex items-center gap-3 text-slate-500"><Plus className="h-4 w-4" /><Smile className="h-4 w-4" /><MessageSquareText className="h-4 w-4" /></div><button type="submit" className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-cyan-300 text-slate-950 transition hover:scale-105" aria-label="Send message"><Send className="h-3.5 w-3.5" /></button></div></div>
+          <div className="min-w-0 rounded-lg border border-white/10 bg-white/[0.045] p-2 focus-within:border-cyan-400/60"><label className="sr-only" htmlFor="chat-message">Message general-go</label><input id="chat-message" value={content} onChange={(event) => setContent(event.target.value)} disabled={!connected} placeholder={connected ? "Message #general-go" : "Waiting for WebSocket connection"} className="h-10 min-w-0 w-full bg-transparent px-2 text-sm text-white outline-none disabled:cursor-not-allowed disabled:opacity-50" /><div className="flex items-center justify-between border-t border-white/10 px-2 pt-2"><div className="flex items-center gap-3 text-slate-500"><Plus className="h-4 w-4" /><Smile className="h-4 w-4" /><MessageSquareText className="h-4 w-4" /></div><button type="submit" disabled={!connected || !content.trim()} className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-cyan-300 text-slate-950 transition hover:scale-105 disabled:cursor-not-allowed disabled:opacity-35" aria-label="Send message"><Send className="h-3.5 w-3.5" /></button></div></div>
         </form>
       </section>
 

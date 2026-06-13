@@ -101,6 +101,13 @@ npm run build
 npm run start
 ```
 
+## Production Engineering
+
+- Real Railway telemetry powers visible latency, uptime, request, WebSocket, and Go runtime metrics.
+- Temporary demo sessions exercise JWT-protected routes without storing demo accounts.
+- The crawler blocks private-network and unsafe redirect targets.
+- Repository CI validates linting, TypeScript, production builds, Go tests, and Go vet.
+
 ## Deployment
 
 This app is ready for Vercel. The included `vercel.json` uses:

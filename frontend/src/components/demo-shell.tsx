@@ -4,20 +4,17 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ExternalLink, Github, Maximize2, RotateCcw } from "lucide-react";
 import Link from "next/link";
 import type { PropsWithChildren } from "react";
-import { useEffect, useState } from "react";
+import { formatUptime, useTelemetry } from "@/lib/telemetry";
 
 type DemoShellProps = PropsWithChildren<{ eyebrow: string; title: string; description: string; repository: string }>;
 
 export function DemoShell({ eyebrow, title, description, repository, children }: DemoShellProps) {
-  const [latency, setLatency] = useState(18);
-  const [runs, setRuns] = useState(128);
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setLatency(Math.floor(Math.random() * 12) + 14);
-      setRuns((value) => value + 1);
-    }, 2500);
-    return () => window.clearInterval(timer);
-  }, []);
+  const { telemetry, latency } = useTelemetry();
+  const metrics = [
+    [telemetry ? "Operational" : "Unavailable", "System status"],
+    [latency === null ? "--" : `${latency}ms`, "Measured latency"],
+    [formatUptime(telemetry?.uptimeSeconds), "Current uptime"]
+  ];
 
   return (
     <main className="overflow-x-hidden px-3 pb-12 pt-6 sm:px-6">
@@ -35,7 +32,7 @@ export function DemoShell({ eyebrow, title, description, repository, children }:
             </div>
           </div>
           <div className="grid grid-cols-3 gap-px bg-slate-200">
-            {[["Operational", "System status"], [`${latency}ms`, "Live latency"], [String(runs), "Demo sessions"]].map(([value, label], index) => <div key={label} className="relative min-w-0 overflow-hidden bg-slate-50 px-3 py-3 sm:px-4"><motion.span className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-emerald-400" animate={{ scaleX: [0.2, 1, 0.2] }} transition={{ duration: 2.4 + index * 0.4, repeat: Infinity }} /><p className="truncate text-xs font-black text-slate-950">{value}</p><p className="mt-0.5 truncate text-[8px] font-bold uppercase tracking-[0.06em] text-slate-400 sm:text-[9px] sm:tracking-[0.1em]">{label}</p></div>)}
+            {metrics.map(([value, label], index) => <div key={label} className="relative min-w-0 overflow-hidden bg-slate-50 px-3 py-3 sm:px-4"><motion.span className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-emerald-400" animate={{ scaleX: telemetry ? [0.2, 1, 0.2] : 0.1 }} transition={{ duration: 2.4 + index * 0.4, repeat: Infinity }} /><p className="truncate text-xs font-black text-slate-950">{value}</p><p className="mt-0.5 truncate text-[8px] font-bold uppercase tracking-[0.06em] text-slate-400 sm:text-[9px] sm:tracking-[0.1em]">{label}</p></div>)}
           </div>
         </header>
         <div className="bg-slate-100 p-2 sm:p-4">{children}</div>

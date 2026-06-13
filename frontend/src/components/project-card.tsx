@@ -6,23 +6,24 @@ import Link from "next/link";
 import { VisualPanel } from "@/components/visual-panel";
 import type { Project } from "@/data/projects";
 import { MagneticLink } from "@/components/magnetic-link";
-import { useEffect, useState } from "react";
+import { useTelemetry } from "@/lib/telemetry";
 
 const styles = {
-  chat: { surface: "bg-cyan-100", accent: "bg-cyan-400", text: "text-cyan-700", button: "bg-cyan-500 hover:bg-cyan-600", tagColor: "#0891b2", number: "01", metric: "18ms", metricLabel: "Delivery" },
-  api: { surface: "bg-lime-100", accent: "bg-lime-400", text: "text-lime-700", button: "bg-lime-400 hover:bg-lime-500", tagColor: "#4d7c0f", number: "02", metric: "JWT", metricLabel: "Protected" },
-  crawler: { surface: "bg-violet-100", accent: "bg-violet-400", text: "text-violet-700", button: "bg-violet-500 hover:bg-violet-600", tagColor: "#7c3aed", number: "03", metric: "50+", metricLabel: "Workers" }
+  chat: { surface: "bg-cyan-100", accent: "bg-cyan-400", text: "text-cyan-700", button: "bg-cyan-500 hover:bg-cyan-600", tagColor: "#0891b2", number: "01" },
+  api: { surface: "bg-lime-100", accent: "bg-lime-400", text: "text-lime-700", button: "bg-lime-400 hover:bg-lime-500", tagColor: "#4d7c0f", number: "02" },
+  crawler: { surface: "bg-violet-100", accent: "bg-violet-400", text: "text-violet-700", button: "bg-violet-500 hover:bg-violet-600", tagColor: "#7c3aed", number: "03" }
 };
 
 export function ProjectCard({ project, index }: { project: Project; index: number }) {
   const Icon = project.icon;
   const style = styles[project.slug];
   const reversed = index % 2 === 1;
-  const [latency, setLatency] = useState(18);
-  useEffect(() => {
-    const timer = window.setInterval(() => setLatency(Math.floor(Math.random() * 11) + 14), 2500);
-    return () => window.clearInterval(timer);
-  }, []);
+  const { telemetry, latency } = useTelemetry();
+  const metric = project.slug === "chat"
+    ? [telemetry ? String(telemetry.activeWebSockets) : "--", "Live sockets"]
+    : project.slug === "api"
+      ? [telemetry ? String(telemetry.requests) : "--", "Requests"]
+      : [telemetry ? String(telemetry.crawlerMaxWorkers) : "--", "Max workers"];
 
   return (
     <motion.article
@@ -62,9 +63,9 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         <div className={`relative min-w-0 overflow-hidden p-5 sm:p-8 lg:p-10 ${style.surface} ${reversed ? "lg:order-1" : ""}`}>
           <motion.div className={`absolute -right-12 -top-12 h-56 w-56 rounded-full ${style.accent} opacity-30 blur-3xl`} animate={{ x: [0, -45, 0], y: [0, 35, 0], scale: [1, 1.12, 1] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }} />
           <div className="relative flex h-full min-h-[500px] flex-col justify-center">
-            <div className="mb-4 flex items-end justify-between gap-4"><div><p className={`text-[10px] font-black uppercase tracking-[0.15em] ${style.text}`}>Interactive preview</p><p className="mt-1 text-xs font-bold text-slate-500">Live system interface</p></div><div className="text-right"><motion.p key={project.slug === "chat" ? latency : style.metric} className="text-2xl font-black text-slate-950" initial={{ opacity: 0.4, y: 3 }} animate={{ opacity: 1, y: 0 }}>{project.slug === "chat" ? `${latency}ms` : style.metric}</motion.p><p className="text-[9px] font-black uppercase tracking-[0.1em] text-slate-500">{style.metricLabel}</p></div></div>
+            <div className="mb-4 flex items-end justify-between gap-4"><div><p className={`text-[10px] font-black uppercase tracking-[0.15em] ${style.text}`}>Interface preview</p><p className="mt-1 text-xs font-bold text-slate-500">Live telemetry shown beside concept UI</p></div><div className="text-right"><motion.p key={metric[0]} className="text-2xl font-black text-slate-950" initial={{ opacity: 0.4, y: 3 }} animate={{ opacity: 1, y: 0 }}>{metric[0]}</motion.p><p className="text-[9px] font-black uppercase tracking-[0.1em] text-slate-500">{metric[1]}</p></div></div>
             <motion.div whileHover={{ scale: 1.012, rotate: reversed ? -0.5 : 0.5 }}><VisualPanel kind={project.slug} title={project.eyebrow} /></motion.div>
-            <div className="mt-4 grid grid-cols-3 gap-2">{[[project.languages[0], "Core"], ["Railway", "Backend"], ["Online", "Status"]].map(([value, label], metricIndex) => <motion.div key={label} className="rounded-md bg-white/70 p-3 backdrop-blur" animate={{ y: [0, metricIndex % 2 ? -3 : 3, 0] }} transition={{ duration: 3.5 + metricIndex, repeat: Infinity, ease: "easeInOut" }}><p className="text-xs font-black text-slate-950">{value}</p><p className="mt-1 text-[9px] font-bold uppercase tracking-[0.1em] text-slate-500">{label}</p></motion.div>)}</div>
+            <div className="mt-4 grid grid-cols-3 gap-2">{[[project.languages[0], "Core"], [latency === null ? "--" : `${latency}ms`, "Latency"], [telemetry?.goVersion?.replace("go", "Go ") ?? "--", "Runtime"]].map(([value, label]) => <div key={label} className="rounded-md bg-white/70 p-3 backdrop-blur"><p className="text-xs font-black text-slate-950">{value}</p><p className="mt-1 text-[9px] font-bold uppercase tracking-[0.1em] text-slate-500">{label}</p></div>)}</div>
           </div>
         </div>
       </div>

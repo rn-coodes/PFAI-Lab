@@ -13,8 +13,10 @@ Production-ready monorepo for Rehan (`F24607089`) at the National University of 
 - `GET /`
 - `GET /health`
 - `GET /api/status`
+- `GET /api/telemetry`
 - `POST /api/auth/register`
 - `POST /api/auth/login`
+- `POST /api/auth/demo-session`
 - `GET /api/profile` with bearer token
 - `POST /api/crawler/crawl` with bearer token
 - `GET /ws?token=<jwt>`
@@ -37,6 +39,13 @@ npm run dev
 
 - Frontend: Vercel
 - Backend: Railway
+
+## Production Engineering
+
+- Live runtime telemetry reports measured uptime, request totals, Go runtime details, and WebSocket activity.
+- Temporary demo sessions exercise protected routes without creating persistent demo accounts.
+- The crawler rejects localhost, private-network, link-local, and unsafe redirect targets.
+- GitHub Actions runs frontend linting, TypeScript checks, production builds, Go tests, and Go vet.
 
 ## Live Services
 

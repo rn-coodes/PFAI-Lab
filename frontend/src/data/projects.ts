@@ -65,7 +65,7 @@ export const projects: Project[] = [
     longDescription:
       "The chat project demonstrates a production-minded real-time communication layer in Go. It models connected clients, centralizes fan-out through a hub, and keeps the UI responsive with live delivery patterns that map cleanly to WebSocket infrastructure.",
     architecture:
-      "A Go server accepts WebSocket upgrades, registers clients into a hub, and broadcasts messages over channels. The frontend consumes the socket stream, renders optimistic message states, and keeps connection status visible to the user.",
+      "A Go server accepts authenticated WebSocket upgrades, registers clients into a hub, and broadcasts messages over channels. The frontend renders only server-delivered events and keeps connection status visible to the user.",
     features: [
       "Bidirectional WebSocket messaging",
       "Concurrent client hub with safe registration and teardown",
@@ -106,7 +106,7 @@ export const projects: Project[] = [
       "JWT login and token validation",
       "Protected route groups with middleware",
       "Structured JSON responses and error handling",
-      "Rate-limit friendly API surface"
+      "Global IP-based rate limiting"
     ],
     technologies: ["Go", "Gin", "JWT", "Middleware", "REST", "Postman"],
     languages: ["Go", "JSON", "TypeScript"],
@@ -123,7 +123,7 @@ export const projects: Project[] = [
       },
       {
         title: "Route Security",
-        caption: "Middleware gates, role-ready handlers, and clean JSON responses.",
+        caption: "Middleware gates, signed claims, and clean JSON responses.",
         kind: "api"
       }
     ]
