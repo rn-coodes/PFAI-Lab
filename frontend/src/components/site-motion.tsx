@@ -11,10 +11,15 @@ export function SiteMotion({ children }: { children: ReactNode }) {
   const mouseX = useMotionValue(-500);
   const mouseY = useMotionValue(-500);
   const spotlight = useMotionTemplate`radial-gradient(380px circle at ${mouseX}px ${mouseY}px, rgba(37,99,235,0.09), transparent 72%)`;
+  const gridMask = useMotionTemplate`radial-gradient(340px circle at ${mouseX}px ${mouseY}px, black 0%, transparent 74%)`;
 
   return (
     <div onPointerMove={(event) => { mouseX.set(event.clientX); mouseY.set(event.clientY); }}>
       <motion.div className="fixed inset-x-0 top-0 z-[80] h-1 origin-left bg-gradient-to-r from-blue-600 via-cyan-400 to-lime-400" style={{ scaleX: progress }} />
+      <motion.div
+        className="pointer-events-none fixed inset-0 z-[-5] hidden bg-[linear-gradient(rgba(37,99,235,0.16)_1px,transparent_1px),linear-gradient(90deg,rgba(37,99,235,0.16)_1px,transparent_1px)] bg-[size:48px_48px] lg:block"
+        style={{ maskImage: gridMask, WebkitMaskImage: gridMask }}
+      />
       <motion.div className="pointer-events-none fixed inset-0 z-40 hidden lg:block" style={{ background: spotlight }} />
       <AnimatePresence mode="wait">
         <motion.div

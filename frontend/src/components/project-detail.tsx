@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Github, Play, Radio, Terminal, Zap } from "lucide-react";
 import Link from "next/link";
 import { BackendStatus } from "@/components/backend-status";
+import { MagneticLink } from "@/components/magnetic-link";
 import { VisualPanel } from "@/components/visual-panel";
 import { getProject, type ProjectSlug } from "@/data/projects";
 
@@ -37,7 +38,7 @@ export function ProjectDetail({ slug }: { slug: ProjectSlug }) {
               <h1 className="mt-8 max-w-3xl text-[clamp(3.5rem,7vw,7rem)] font-black leading-[0.9] text-slate-950">{project.title}</h1>
               <p className="mt-7 max-w-2xl text-base leading-8 text-slate-600">{project.longDescription}</p>
               <div className="mt-9 flex flex-wrap gap-3">
-                <Link href={project.demo} className={`group inline-flex items-center gap-3 rounded-md px-5 py-4 text-xs font-black uppercase text-white transition ${style.button}`}>Launch live demo <Play className="h-4 w-4 transition group-hover:translate-x-1" /></Link>
+                <MagneticLink href={project.demo} className={`premium-button group inline-flex items-center gap-3 rounded-md px-5 py-4 text-xs font-black uppercase text-white transition ${style.button}`}>Launch live demo <Play className="h-4 w-4 transition group-hover:translate-x-1" /></MagneticLink>
                 <Link href={project.github} target="_blank" className="group inline-flex items-center gap-3 rounded-md border border-slate-200 bg-white px-5 py-4 text-xs font-black uppercase text-slate-700 transition hover:border-slate-950"><Github className="h-4 w-4" /> Source code <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></Link>
               </div>
             </div>

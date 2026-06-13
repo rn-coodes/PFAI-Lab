@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Cable, Github, Network, Radio, ShieldCheck, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { links } from "@/data/projects";
+import { MagneticLink } from "@/components/magnetic-link";
 
 const services = [
   { label: "WebSockets", detail: "Realtime hub", icon: Cable, position: "left-0 top-[18%]", color: "bg-cyan-300 text-cyan-950" },
@@ -23,7 +24,7 @@ export function Hero() {
             </h1>
             <p className="mt-7 max-w-xl break-words text-base leading-8 text-slate-600 sm:text-lg">I&apos;m Rehan, a Go-focused backend engineer creating realtime products, secure APIs, and concurrent services that are built to perform.</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link href="/work" className="flex h-13 items-center justify-center gap-3 rounded-md bg-blue-600 px-6 py-4 text-sm font-black text-white transition hover:bg-slate-950">Explore projects <ArrowRight className="h-4 w-4" /></Link>
+              <MagneticLink href="/work" className="premium-button flex h-13 items-center justify-center gap-3 rounded-md bg-blue-600 px-6 py-4 text-sm font-black text-white transition hover:bg-slate-950">Explore projects <ArrowRight className="h-4 w-4" /></MagneticLink>
               <Link href={links.mainRepository} target="_blank" className="flex h-13 items-center justify-center gap-3 rounded-md border border-slate-200 bg-white px-6 py-4 text-sm font-black text-slate-700 transition hover:border-slate-950 hover:text-slate-950"><Github className="h-4 w-4" /> View source</Link>
             </div>
           </motion.div>
@@ -48,6 +49,8 @@ export function Hero() {
                 <motion.div className="h-[270px] w-[270px] rounded-full border-2 border-dashed border-blue-300/60 sm:h-[330px] sm:w-[330px]" animate={{ rotate: -360 }} transition={{ duration: 16, repeat: Infinity, ease: "linear" }} />
               </div>
               <div className="absolute inset-0 grid place-items-center">
+                <motion.div className="absolute h-[210px] w-[210px] rounded-full border border-blue-400/45 sm:h-[260px] sm:w-[260px]" animate={{ scale: [1, 1.42], opacity: [0.45, 0] }} transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut" }} />
+                <motion.div className="absolute h-[210px] w-[210px] rounded-full border border-cyan-400/35 sm:h-[260px] sm:w-[260px]" animate={{ scale: [1, 1.42], opacity: [0.4, 0] }} transition={{ duration: 2.8, delay: 1.4, repeat: Infinity, ease: "easeOut" }} />
                 <motion.div className="relative h-[210px] w-[210px] rounded-full bg-slate-950 shadow-[0_35px_80px_rgba(37,99,235,.32)] sm:h-[260px] sm:w-[260px]" animate={{ y: [0, -10, 0], scale: [1, 1.035, 1] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}>
                   <motion.div className="absolute inset-3 rounded-full border border-white/15" animate={{ rotate: 360 }} transition={{ duration: 13, repeat: Infinity, ease: "linear" }}>
                     <span className="absolute right-[8%] top-[18%] h-2 w-2 rounded-full bg-lime-300 shadow-[0_0_14px_rgba(190,242,100,.9)]" />
