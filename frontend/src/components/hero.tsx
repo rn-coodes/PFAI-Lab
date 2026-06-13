@@ -1,74 +1,64 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Cable, Github, Network, Radio, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, Cable, CheckCircle2, Github, Network, Radio, Server, ShieldCheck, Terminal } from "lucide-react";
 import Link from "next/link";
 import { links } from "@/data/projects";
 import { MagneticLink } from "@/components/magnetic-link";
 import { formatUptime, useTelemetry } from "@/lib/telemetry";
 
-const services = [
-  { label: "WebSockets", detail: "Realtime hub", icon: Cable, position: "left-0 top-[18%]", color: "bg-cyan-300 text-cyan-950" },
-  { label: "JWT Auth", detail: "Secure access", icon: ShieldCheck, position: "right-0 top-[28%]", color: "bg-lime-300 text-lime-950" },
-  { label: "Concurrency", detail: "Worker pools", icon: Network, position: "bottom-[4%] left-[16%]", color: "bg-violet-300 text-violet-950" }
+const systems = [
+  { label: "WebSocket hub", icon: Cable, color: "bg-cyan-300", detail: "Authenticated realtime fan-out" },
+  { label: "JWT gateway", icon: ShieldCheck, color: "bg-lime-300", detail: "Protected route middleware" },
+  { label: "Crawler pool", icon: Network, color: "bg-violet-300", detail: "Bounded concurrent workers" }
 ];
 
 export function Hero() {
   const { telemetry, latency } = useTelemetry();
+  const runtime = telemetry?.goVersion?.replace("go", "Go ") ?? "Connecting";
+
   return (
-    <section className="overflow-hidden px-3 pb-12 pt-8 sm:px-6 sm:pt-12">
-      <div className="mx-auto grid min-h-[720px] max-w-7xl overflow-hidden rounded-lg border border-slate-200 bg-white shadow-[0_30px_100px_rgba(15,23,42,0.10)] lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="min-w-0 flex flex-col justify-center p-7 sm:p-12 lg:p-16">
-          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-black text-blue-700"><Radio className="h-3.5 w-3.5 animate-pulse" /> Go backend systems online</span>
-            <h1 className="mt-8 max-w-3xl text-balance text-[clamp(3.8rem,7vw,7.6rem)] font-black leading-[0.9] text-slate-950">
-              Building fast,<br /><motion.span className="inline-block text-blue-600" animate={{ y: [0, -5, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>reliable</motion.span> systems.
-            </h1>
-            <p className="mt-7 max-w-xl break-words text-base leading-8 text-slate-600 sm:text-lg">I&apos;m Rehan, a Go-focused backend engineer creating realtime products, secure APIs, and concurrent services that are built to perform.</p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <MagneticLink href="/work" className="premium-button flex h-13 items-center justify-center gap-3 rounded-md bg-blue-600 px-6 py-4 text-sm font-black text-white transition hover:bg-slate-950">Explore projects <ArrowRight className="h-4 w-4" /></MagneticLink>
-              <Link href={links.mainRepository} target="_blank" className="flex h-13 items-center justify-center gap-3 rounded-md border border-slate-200 bg-white px-6 py-4 text-sm font-black text-slate-700 transition hover:border-slate-950 hover:text-slate-950"><Github className="h-4 w-4" /> View source</Link>
+    <section className="px-3 pb-16 pt-5 sm:px-6 sm:pt-8">
+      <div className="relative mx-auto w-full min-w-0 max-w-[1440px] overflow-hidden rounded-lg border border-slate-800 bg-[#07111f] text-white shadow-[0_40px_120px_rgba(15,23,42,.26)]">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(56,189,248,.06)_1px,transparent_1px),linear-gradient(90deg,rgba(56,189,248,.06)_1px,transparent_1px)] bg-[size:56px_56px]" />
+        <motion.div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300 to-transparent" animate={{ opacity: [0.25, 1, 0.25] }} transition={{ duration: 3, repeat: Infinity }} />
+
+        <div className="relative grid min-h-[760px] grid-cols-[minmax(0,1fr)] xl:grid-cols-[1.02fr_0.98fr]">
+          <div className="flex min-w-0 flex-col justify-between border-b border-white/10 p-7 sm:p-12 lg:p-16 xl:border-b-0 xl:border-r">
+            <div>
+              <motion.div className="flex flex-wrap items-center gap-3" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}>
+                <span className="inline-flex items-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-2 text-[10px] font-black uppercase tracking-[0.14em] text-cyan-200"><Radio className="h-3.5 w-3.5 animate-pulse" /> Railway runtime online</span>
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">Rehan / F24607089</span>
+              </motion.div>
+
+              <motion.h1 className="mt-10 max-w-4xl text-[3.15rem] font-black leading-[0.82] tracking-[-0.04em] sm:text-[clamp(4rem,8vw,8.8rem)]" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>
+                GO<br /><span className="text-cyan-300">SYSTEMS</span><br />ENGINEER.
+              </motion.h1>
+              <motion.p className="mt-8 max-w-xl break-words border-l-2 border-cyan-300 pl-5 text-base leading-8 text-slate-300 sm:text-lg" initial={{ opacity: 0, x: -18 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.25 }}>Realtime communication, secure identity, and controlled concurrency. Built in Go, proven through live deployed products.</motion.p>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <MagneticLink href="/work" className="premium-button flex h-14 items-center justify-center gap-3 rounded-md bg-cyan-300 px-7 text-sm font-black text-slate-950 transition hover:bg-white">Explore live systems <ArrowRight className="h-4 w-4" /></MagneticLink>
+                <Link href={links.mainRepository} target="_blank" className="flex h-14 items-center justify-center gap-3 rounded-md border border-white/15 px-7 text-sm font-black text-white transition hover:border-white hover:bg-white hover:text-slate-950"><Github className="h-4 w-4" /> Inspect source</Link>
+              </div>
             </div>
-          </motion.div>
-          <div className="mt-14 grid min-w-0 grid-cols-3 gap-3 border-t border-slate-200 pt-6 sm:gap-4">
-            {[["03", "Live products"], [latency === null ? "--" : `${latency}ms`, "Measured latency"], [formatUptime(telemetry?.uptimeSeconds), "Current uptime"]].map(([value, label], index) => <motion.div key={label} className="min-w-0" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55 + index * 0.12 }} whileHover={{ y: -4 }}><p className="text-2xl font-black text-slate-950 sm:text-3xl">{value}</p><p className="mt-1 break-words text-[9px] font-bold uppercase tracking-[0.08em] text-slate-400 sm:text-[10px] sm:tracking-[0.12em]">{label}</p></motion.div>)}
+
+            <div className="mt-14 grid grid-cols-3 gap-px overflow-hidden rounded-md border border-white/10 bg-white/10">
+              {[["03", "Deployed products"], [latency === null ? "--" : `${latency}ms`, "Measured latency"], [formatUptime(telemetry?.uptimeSeconds), "Current uptime"]].map(([value, label], index) => <motion.div key={label} className="min-w-0 overflow-hidden bg-[#0b1727] p-4 sm:p-5" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 + index * 0.12 }}><p className="truncate text-xl font-black text-white sm:text-3xl">{value}</p><p className="mt-2 truncate text-[8px] font-black uppercase tracking-[0.06em] text-slate-500 sm:text-[9px] sm:tracking-[0.1em]">{label}</p></motion.div>)}
+            </div>
           </div>
-        </div>
 
-        <div className="relative min-w-0 overflow-hidden bg-[#eef5ff] p-4 sm:p-8">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(37,99,235,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(37,99,235,.07)_1px,transparent_1px)] bg-[size:40px_40px]" />
-          <motion.div className="absolute -right-12 -top-12 h-56 w-56 rounded-full bg-cyan-300/50 blur-3xl" animate={{ x: [0, -45, 0], y: [0, 35, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }} />
-          <motion.div className="absolute -bottom-16 left-10 h-64 w-64 rounded-full bg-violet-300/40 blur-3xl" animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} />
-          <div className="relative flex h-full min-h-[600px] items-center justify-center">
-            <div className="relative h-[500px] w-full max-w-[520px]">
-              <div className="pointer-events-none absolute inset-0 grid place-items-center">
-                <motion.div className="h-[340px] w-[340px] rounded-full border border-blue-300/70 sm:h-[430px] sm:w-[430px]" animate={{ rotate: 360 }} transition={{ duration: 22, repeat: Infinity, ease: "linear" }}>
-                  <span className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600 shadow-[0_0_22px_rgba(37,99,235,.9)]" />
-                  <span className="absolute bottom-[12%] right-[8%] h-2.5 w-2.5 rounded-full bg-violet-500 shadow-[0_0_18px_rgba(139,92,246,.8)]" />
-                </motion.div>
-              </div>
-              <div className="pointer-events-none absolute inset-0 grid place-items-center">
-                <motion.div className="h-[270px] w-[270px] rounded-full border-2 border-dashed border-blue-300/60 sm:h-[330px] sm:w-[330px]" animate={{ rotate: -360 }} transition={{ duration: 16, repeat: Infinity, ease: "linear" }} />
-              </div>
-              <div className="absolute inset-0 grid place-items-center">
-                <motion.div className="absolute h-[210px] w-[210px] rounded-full border border-blue-400/45 sm:h-[260px] sm:w-[260px]" animate={{ scale: [1, 1.42], opacity: [0.45, 0] }} transition={{ duration: 2.8, repeat: Infinity, ease: "easeOut" }} />
-                <motion.div className="absolute h-[210px] w-[210px] rounded-full border border-cyan-400/35 sm:h-[260px] sm:w-[260px]" animate={{ scale: [1, 1.42], opacity: [0.4, 0] }} transition={{ duration: 2.8, delay: 1.4, repeat: Infinity, ease: "easeOut" }} />
-                <motion.div className="relative h-[210px] w-[210px] rounded-full bg-slate-950 shadow-[0_35px_80px_rgba(37,99,235,.32)] sm:h-[260px] sm:w-[260px]" animate={{ y: [0, -10, 0], scale: [1, 1.035, 1] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}>
-                  <motion.div className="absolute inset-3 rounded-full border border-white/15" animate={{ rotate: 360 }} transition={{ duration: 13, repeat: Infinity, ease: "linear" }}>
-                    <span className="absolute right-[8%] top-[18%] h-2 w-2 rounded-full bg-lime-300 shadow-[0_0_14px_rgba(190,242,100,.9)]" />
-                  </motion.div>
-                  <div className="absolute inset-0 grid place-items-center text-center text-white">
-                    <div><motion.p className="text-[5.5rem] font-black leading-none text-cyan-300 sm:text-[7.5rem]" animate={{ textShadow: ["0 0 0 rgba(34,211,238,0)", "0 0 28px rgba(34,211,238,.45)", "0 0 0 rgba(34,211,238,0)"] }} transition={{ duration: 3, repeat: Infinity }}>Go</motion.p><p className="mt-2 text-[9px] font-black uppercase tracking-[0.22em] text-slate-400">Systems online</p></div>
-                  </div>
-                </motion.div>
-              </div>
+          <div className="flex min-w-0 flex-col bg-white/[0.025] p-5 sm:p-8 lg:p-10">
+            <div className="flex min-w-0 flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5"><div className="min-w-0"><p className="font-mono text-[10px] font-black uppercase tracking-[0.16em] text-cyan-300">Live infrastructure console</p><p className="mt-2 text-sm font-bold text-slate-400">Production telemetry from Railway</p></div><div className="flex shrink-0 items-center gap-2 rounded-full border border-emerald-300/20 bg-emerald-300/10 px-3 py-2 text-[9px] font-black uppercase text-emerald-300"><span className="h-2 w-2 animate-pulse rounded-full bg-emerald-300" /> Operational</div></div>
 
-              {services.map((service, index) => {
-                const Icon = service.icon;
-                return <motion.div key={service.label} className={`absolute ${service.position} z-10 flex items-center gap-3 rounded-lg border border-white/80 bg-white/90 p-3 shadow-[0_16px_40px_rgba(15,23,42,.14)] backdrop-blur`} initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1, y: [0, index % 2 ? -8 : 8, 0] }} transition={{ opacity: { delay: 0.55 + index * 0.15 }, scale: { delay: 0.55 + index * 0.15 }, y: { duration: 4 + index, repeat: Infinity, ease: "easeInOut" } }} whileHover={{ scale: 1.08, y: -5 }}><span className={`grid h-10 w-10 place-items-center rounded-md ${service.color}`}><Icon className="h-4 w-4" /></span><span className="hidden sm:block"><span className="block text-xs font-black text-slate-950">{service.label}</span><span className="mt-0.5 block text-[9px] font-bold uppercase tracking-[0.1em] text-slate-400">{service.detail}</span></span></motion.div>;
-              })}
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              {[["Runtime", runtime, Server, "text-cyan-300"], ["Requests served", telemetry ? String(telemetry.requests) : "--", Terminal, "text-lime-300"], ["Active sockets", telemetry ? String(telemetry.activeWebSockets) : "--", Cable, "text-violet-300"], ["Goroutines", telemetry ? String(telemetry.goroutines) : "--", Network, "text-amber-300"]].map(([label, value, Icon, color], index) => { const MetricIcon = Icon as typeof Server; return <motion.div key={String(label)} className="relative min-w-0 overflow-hidden rounded-md border border-white/10 bg-white/[0.045] p-5" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.35 + index * 0.08 }} whileHover={{ y: -4, borderColor: "rgba(103,232,249,.45)" }}><MetricIcon className={`h-4 w-4 ${color}`} /><p className="mt-7 truncate text-2xl font-black">{String(value)}</p><p className="mt-1 truncate text-[9px] font-black uppercase tracking-[0.12em] text-slate-500">{String(label)}</p><motion.span className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-cyan-300" animate={{ scaleX: [0.15, 1, 0.15] }} transition={{ duration: 3 + index * 0.35, repeat: Infinity }} /></motion.div>; })}
+            </div>
 
-              <motion.div className="absolute bottom-0 right-[7%] z-10 rounded-lg border border-white/80 bg-white/90 p-4 shadow-[0_16px_40px_rgba(15,23,42,.14)] backdrop-blur" animate={{ y: [0, -7, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}><div className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-blue-600" /><p className="text-[9px] font-black uppercase tracking-[0.12em] text-blue-600">Live runtime</p></div><p className="mt-2 text-xl font-black text-slate-950">{telemetry?.goVersion?.replace("go", "Go ") ?? "Checking"}</p><p className={`text-[10px] font-bold ${telemetry ? "text-emerald-600" : "text-slate-400"}`}>{telemetry ? `${telemetry.goroutines} goroutines` : "Connecting to Railway"}</p></motion.div>
+            <div className="mt-5 flex-1 rounded-md border border-white/10 bg-[#050b14] p-4 sm:p-6">
+              <div className="flex items-center justify-between"><p className="font-mono text-[10px] font-black uppercase tracking-[0.14em] text-slate-500">Service topology</p><span className="font-mono text-[9px] text-emerald-300">ALL CHECKS PASSING</span></div>
+              <div className="relative mt-8 space-y-4">
+                <div className="absolute bottom-8 left-6 top-8 w-px bg-gradient-to-b from-cyan-300 via-lime-300 to-violet-300 opacity-40" />
+                {systems.map((system, index) => { const Icon = system.icon; return <motion.div key={system.label} className="relative flex items-center gap-4 rounded-md border border-white/10 bg-white/[0.035] p-4" initial={{ opacity: 0, x: 25 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.65 + index * 0.14 }} whileHover={{ x: 5, backgroundColor: "rgba(255,255,255,.065)" }}><span className={`z-10 grid h-12 w-12 shrink-0 place-items-center rounded-md ${system.color} text-slate-950`}><Icon className="h-5 w-5" /></span><div className="min-w-0 flex-1"><p className="text-sm font-black">{system.label}</p><p className="mt-1 text-[10px] text-slate-500">{system.detail}</p></div><CheckCircle2 className="h-4 w-4 text-emerald-300" /></motion.div>; })}
+              </div>
             </div>
           </div>
         </div>
