@@ -26,12 +26,12 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
 
   return (
     <motion.article
-      className="group mb-8 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-[0_22px_70px_rgba(15,23,42,0.09)] last:mb-0"
+      className="group mb-8 overflow-hidden rounded-lg border border-slate-200/90 bg-white shadow-[0_22px_70px_rgba(15,23,42,0.08)] ring-1 ring-white/80 last:mb-0"
       initial={{ opacity: 0, y: 55 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.75, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -6, boxShadow: "0 30px 90px rgba(15,23,42,0.13)" }}
     >
       <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
         <div className={`flex min-w-0 flex-col justify-between p-7 sm:p-10 lg:p-12 ${reversed ? "lg:order-2" : ""}`}>
