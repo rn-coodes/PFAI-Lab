@@ -109,7 +109,11 @@ This app is ready for Vercel. The included `vercel.json` uses:
 - Build command: `npm run build`
 - Framework: `nextjs`
 
-## Placeholder Links
+## Production Links
+
+Portfolio:
+
+- `https://rehan-go-projects.vercel.app`
 
 GitHub:
 
@@ -119,6 +123,6 @@ GitHub:
 
 Live demos:
 
-- `https://chat-demo.vercel.app`
-- `https://api-demo.vercel.app`
-- `https://crawler-demo.vercel.app`
+- `https://rehan-go-projects.vercel.app/demo/chat`
+- `https://rehan-go-projects.vercel.app/demo/api`
+- `https://rehan-go-projects.vercel.app/demo/crawler`
