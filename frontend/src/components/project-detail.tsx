@@ -40,28 +40,28 @@ export function ProjectDetail({ slug }: { slug: ProjectSlug }) {
           <Link href="/work" className="group inline-flex items-center gap-2 text-sm font-black text-slate-600 transition hover:text-blue-600"><ArrowLeft className="h-4 w-4 transition group-hover:-translate-x-1" /> All projects</Link>
         </motion.div>
 
-        <motion.section className="relative mt-6 overflow-hidden rounded-lg border border-slate-800 bg-[#07111f] text-white shadow-[0_35px_110px_rgba(15,23,42,0.24)]" initial={{ opacity: 0, y: 35 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}>
-          <div className={`h-1.5 ${style.accent}`} />
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.04)_1px,transparent_1px)] bg-[size:48px_48px]" />
+        <motion.section className="relative mt-6 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-[0_30px_100px_rgba(15,23,42,0.11)]" initial={{ opacity: 0, y: 35 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}>
+          <div className={`h-1 ${style.accent}`} />
           <div className="relative grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="flex min-w-0 flex-col justify-center border-b border-white/10 p-7 sm:p-12 lg:border-b-0 lg:border-r lg:p-14">
+            <div className="flex min-w-0 flex-col justify-center border-b border-slate-200 p-7 sm:p-12 lg:border-b-0 lg:border-r lg:p-14">
               <div className="flex items-center gap-3">
-                <motion.span className={`grid h-12 w-12 place-items-center rounded-md ${style.accent} text-slate-950`} whileHover={{ rotate: 12, scale: 1.1 }}><Icon className="h-5 w-5" /></motion.span>
-                <div><p className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{project.eyebrow}</p><p className="mt-1 flex items-center gap-1.5 text-[10px] font-black uppercase text-emerald-300"><Radio className="h-3 w-3 animate-pulse" /> Deployed on Railway</p></div>
+                <motion.span className={`grid h-12 w-12 place-items-center rounded-md ${style.surface} ${style.text}`} whileHover={{ rotate: 12, scale: 1.1 }}><Icon className="h-5 w-5" /></motion.span>
+                <div><p className={`text-xs font-black uppercase tracking-[0.18em] ${style.text}`}>{project.eyebrow}</p><p className="mt-1 flex items-center gap-1.5 text-[10px] font-black uppercase text-emerald-600"><Radio className="h-3 w-3 animate-pulse" /> Deployed on Railway</p></div>
               </div>
-              <h1 className="mt-9 max-w-3xl text-[3.1rem] font-black leading-[0.86] tracking-[-0.03em] text-white sm:text-[clamp(3.5rem,7vw,7.4rem)]">{project.title}</h1>
-              <p className="mt-7 max-w-2xl border-l-2 border-white/20 pl-5 text-base leading-8 text-slate-400">{project.longDescription}</p>
+              <h1 className="mt-9 max-w-3xl text-[3.1rem] font-black leading-[0.9] tracking-[-0.03em] text-slate-950 sm:text-[clamp(3.5rem,7vw,7.1rem)]">{project.title}</h1>
+              <p className="mt-7 max-w-2xl border-l-2 border-slate-200 pl-5 text-base leading-8 text-slate-600">{project.longDescription}</p>
               <div className="mt-9 flex flex-wrap gap-3">
-                <MagneticLink href={project.demo} className={`premium-button group inline-flex items-center gap-3 rounded-md px-5 py-4 text-xs font-black uppercase text-slate-950 transition ${style.button}`}>Launch live demo <Play className="h-4 w-4 transition group-hover:translate-x-1" /></MagneticLink>
-                <Link href={project.github} target="_blank" className="group inline-flex items-center gap-3 rounded-md border border-white/15 px-5 py-4 text-xs font-black uppercase text-white transition hover:border-white hover:bg-white hover:text-slate-950"><Github className="h-4 w-4" /> Source code <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></Link>
+                <MagneticLink href={project.demo} className={`premium-button group inline-flex items-center gap-3 rounded-md px-5 py-4 text-xs font-black uppercase text-white transition ${style.button}`}>Launch live demo <Play className="h-4 w-4 transition group-hover:translate-x-1" /></MagneticLink>
+                <Link href={project.github} target="_blank" className="group inline-flex items-center gap-3 rounded-md border border-slate-200 px-5 py-4 text-xs font-black uppercase text-slate-700 transition hover:border-slate-950"><Github className="h-4 w-4" /> Source code <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></Link>
               </div>
             </div>
 
-            <div className="relative min-w-0 overflow-hidden bg-white/[0.025] p-5 sm:p-8 lg:p-10">
+            <div className={`relative min-w-0 overflow-hidden p-5 sm:p-8 lg:p-10 ${style.surface}`}>
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,.55)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.55)_1px,transparent_1px)] bg-[size:38px_38px]" />
               <div className="relative flex h-full min-h-[560px] flex-col justify-center">
-                <div className="mb-4 flex items-end justify-between gap-4"><div><p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400">Product interface</p><p className="mt-1 text-xs font-bold text-slate-500">Concept preview with real runtime telemetry</p></div><div className="text-right"><p className="text-3xl font-black text-white">{headlineMetric[0]}</p><p className="text-[9px] font-black uppercase tracking-[0.1em] text-slate-500">{headlineMetric[1]}</p></div></div>
+                <div className="mb-4 flex items-end justify-between gap-4"><div><p className={`text-[10px] font-black uppercase tracking-[0.15em] ${style.text}`}>Product interface</p><p className="mt-1 text-xs font-bold text-slate-500">Concept preview with real runtime telemetry</p></div><div className="text-right"><p className="text-3xl font-black text-slate-950">{headlineMetric[0]}</p><p className="text-[9px] font-black uppercase tracking-[0.1em] text-slate-500">{headlineMetric[1]}</p></div></div>
                 <motion.div initial={{ opacity: 0, rotate: 2, scale: 0.96 }} animate={{ opacity: 1, rotate: -1, scale: 1 }} transition={{ delay: 0.25, duration: 0.8 }} whileHover={{ rotate: 0, scale: 1.015 }}><VisualPanel kind={project.screenshots[0].kind} title={project.title} /></motion.div>
-                <div className="mt-4 grid grid-cols-3 gap-px overflow-hidden rounded-md border border-white/10 bg-white/10">{[[project.languages[0], "Core"], [latency === null ? "--" : `${latency}ms`, "Latency"], [telemetry?.goVersion?.replace("go", "Go ") ?? "--", "Runtime"]].map(([value, label], index) => <motion.div key={label} className="bg-[#0b1727] p-3" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55 + index * 0.1 }}><p className="text-sm font-black text-white">{value}</p><p className="mt-1 text-[9px] font-bold uppercase tracking-[0.1em] text-slate-500">{label}</p></motion.div>)}</div>
+                <div className="mt-4 grid grid-cols-3 gap-px overflow-hidden rounded-md border border-slate-200 bg-slate-200">{[[project.languages[0], "Core"], [latency === null ? "--" : `${latency}ms`, "Latency"], [telemetry?.goVersion?.replace("go", "Go ") ?? "--", "Runtime"]].map(([value, label], index) => <motion.div key={label} className="bg-white/90 p-3" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55 + index * 0.1 }}><p className="text-sm font-black text-slate-950">{value}</p><p className="mt-1 text-[9px] font-bold uppercase tracking-[0.1em] text-slate-500">{label}</p></motion.div>)}</div>
               </div>
             </div>
           </div>
